@@ -1,0 +1,48 @@
+version: '3.8'
+
+volumes:
+  mongodata:
+
+services:
+  pg_db:
+    image: postgres
+    container_name: postgres
+    restart: unless-stopped
+    command: ["postgres", "-c", "log_statement=all"]
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=ux-quarkus
+#    volumes:
+#      - ./db/pg_project:/var/lib/postgresql/data
+    ports:
+      - 15432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=postgres@postgres.com
+      - PGADMIN_DEFAULT_PASSWORD=secret
+    ports:
+      - 15433:80
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    ports:
+      - 18081:8081

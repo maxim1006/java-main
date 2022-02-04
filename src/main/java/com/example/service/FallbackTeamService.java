@@ -1,0 +1,18 @@
+package com.example.service;
+
+import com.example.model.Team;
+import io.quarkus.arc.DefaultBean;
+
+import javax.enterprise.context.ApplicationScoped;
+import java.util.Collections;
+import java.util.List;
+
+@DefaultBean
+@ApplicationScoped
+public class FallbackTeamService implements TeamService {
+
+    @Override
+    public List<Team> getAllTeams() {
+        return Collections.emptyList();
+    }
+}

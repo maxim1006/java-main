@@ -1,0 +1,27 @@
+quarkus:
+  http:
+    port: 8080
+
+  datasource:
+    db-kind: postgresql
+    username: postgres
+    password: postgres
+    jdbc:
+      url: "jdbc:postgresql://127.0.0.1:5432/postgres"
+
+  hibernate-orm:
+    database:
+      generation: update
+
+  mongodb:
+    connection-string: mongodb://localhost:27017
+
+portal:
+  default-locale: en-US
+  locales:
+    "en-US":
+      direction: LTR
+      path: localization/en-US.json
+    "ar-SA":
+      direction: RTL
+      path: localization/ar-SA.json
