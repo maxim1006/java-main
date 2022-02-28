@@ -63,7 +63,8 @@ class Singleton {
         return 1;
     }
 
-    private Singleton() {}
+    private Singleton() {
+    }
 
     public static Singleton getInstance() {
         return INSTANCE;
@@ -114,6 +115,7 @@ class AbstractTestClass extends AbstractClass {
 // нельзя создавать инстансы абстрактных классов. Разница между абстрактным и просто классом еще в том что в абстракный класс может реализовывать только часть интерфейса, а уже его наследник обязан дореализовывать остальное
 interface TestInterface1 {
     String getProp();
+
     String getProp1();
 }
 
@@ -191,3 +193,59 @@ class FinallyTest {
         System.out.println(stringSize(null));
     }
 }
+
+class Switch {
+    public static void main(String[] args) {
+        int switchValue = 3;
+        char switchCharValue = 'A';
+        String month = "January".toLowerCase();
+
+        switch (switchValue) {
+            case 1: {
+                System.out.println("Value 1");
+                break;
+            }
+
+            case 3:
+            case 4:
+            case 5: {
+                System.out.println("Value 3,4,5");
+            }
+
+            default: {
+                System.out.println("default");
+            }
+        }
+
+        switch (switchCharValue) {
+            case 'A':
+            case 'B':
+            case 'C':
+            case 'D':
+            case 'E': {
+                System.out.println("A, B, C, D, E");
+                break;
+            }
+
+            default: {
+                System.out.println("Was not 1,2,3,4");
+                break;
+            }
+        }
+
+        switch (month) {
+            case "january": {
+                System.out.println("January");
+                break;
+            }
+
+            case "february": {
+                System.out.println("February");
+                break;
+            }
+
+            default: {}
+        }
+    }
+}
+

@@ -45,7 +45,7 @@ class ListsAndArrays {
         // фиксированная - не смогу сделать add
         List<String> list = List.of("Max", "Aliya", "Lili", "Alice");
         List<String> arraysAsList = Arrays.asList("Max", "Aliya", "Lili", "Alice");
-        // расширяемая - не смогу сделать add
+        // расширяемая - смогу сделать add
         List<String> arrayList = new ArrayList<String>();
         List<String> linkedList = new LinkedList<String>();
 
@@ -57,6 +57,7 @@ class ListsAndArrays {
         linkedList.add("Max");
         linkedList.add("Aliya");
         linkedList.add("Lili");
+        linkedList.add("Alice");
         linkedList.add("Alice");
 
 //        System.out.println(arrayList.subList(1,3));
@@ -140,7 +141,7 @@ class Regexps {
 }
 
 class Numbers {
-    public static final double Pound = 0.45359237d;
+    public static final double Pound = 0.45359237D;
 
     public static double convertPoundsToKilos(double pounds) {
         return pounds * Numbers.Pound;
@@ -194,18 +195,18 @@ class Numbers {
         int testInt = 5;
 
         /* @deprecated */
-        float testFloat = 5.25f;
+        float testFloat = 5.25F;
         /* @deprecated */
         float testFloat1 = (float) 5.25; // без кастинга ошибко
 
         // В основном использую double!!!
-        double testDouble = 5.25d;
+        double testDouble = 5.25D;
 
         int intDevision = 5 / 2; // 2
-        float floatDevision = 5f / 2f; // 2.5
-        float floatDevision1 = 5f / 3f; // 1.6666666
-        double doubleDevision = 5d / 2d; // 2.5
-        double doubleDevision1 = 5d / 3d; // 1.6666666666666667
+        float floatDevision = 5F / 2F; // 2.5
+        float floatDevision1 = 5F / 3F; // 1.6666666
+        double doubleDevision = 5D / 2D; // 2.5
+        double doubleDevision1 = 5D / 3D; // 1.6666666666666667
 
         System.out.println(intDevision);
         System.out.println(floatDevision);
@@ -213,7 +214,7 @@ class Numbers {
         System.out.println(floatDevision1);
         System.out.println(doubleDevision1);
 
-        System.out.println(Numbers.convertPoundsToKilos(200d));
+        System.out.println(Numbers.convertPoundsToKilos(200D));
     }
 }
 
@@ -291,6 +292,13 @@ class Cases {
         map.put("PascalCase", "PascalCase");
         map.put("kebab-case", "kebab-case");
         map.put("snake_case", "snake_case");
+
+        Set<String> keys = map.keySet();
+        ArrayList<String> values = new ArrayList<>(map.values());
+
+        for (Map.Entry entry: map.entrySet()) {
+            System.out.println(entry);
+        }
     }
 }
 
@@ -305,7 +313,7 @@ class Methods {
     // тут сработает calculate так как это тоже static метод
     public static void main(String[] args) {
         // или так
-        List<Member> members = Arrays.asList(new Member("Max", 1500L), new Member("Aliya", 900L), new Member("Lili", 400L), new Member("Alice", 50L) );
+        List<Member> members = Arrays.asList(new Member("Max", 1500L), new Member("Aliya", 900L), new Member("Lili", 400L), new Member("Alice", 50L));
 
         members.forEach(val -> displayHighScorePosition(val.name, val.score));
 
@@ -314,6 +322,10 @@ class Methods {
         displayHighScorePosition("Aliya", 900L);
         displayHighScorePosition("Lili", 400L);
         displayHighScorePosition("Alice", 50L);
+
+        checkNumber(1);
+        checkNumber(-1);
+        checkNumber(0);
     }
 
     public static int calculate(boolean gameOver, int level, int points) {
@@ -332,5 +344,29 @@ class Methods {
         if (score >= 100L) return 3;
 
         return 4;
+    }
+
+    public static void checkNumber(int num) {
+        if (num > 0) System.out.println("positive");
+        if (num < 0) System.out.println("negative");
+        if (num == 0) System.out.println("zero");
+    }
+}
+
+class While {
+    // отличие while от do while наконец-то раскрыто))
+    public static void main(String[] args) {
+        int num = 0;
+
+        while (num < 1) {
+            System.out.println(num);
+            num++;
+        }
+
+        // если вдруг захочу чтобы разок цикл тикнул
+        do {
+            System.out.println(num);
+            num++;
+        } while (num < 1);
     }
 }
