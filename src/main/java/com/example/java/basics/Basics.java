@@ -14,19 +14,28 @@ public class Basics {
     }
 }
 
+class VarAndConstantsClass {
+    public static void main(String[] args) {
+        // Слово var ставится вместо типа данных, а сам тип переменной выводится из того значения, которое ей присваивается
+        var a = 10_10__10;
+        System.out.println(a); // 101010
+
+        final int NUM = 10; // не могу ничего присвоить
+//        NUM = 11; // ошибко
+    }
+}
+
 class ListsAndArrays {
     public static void main(String[] args) {
         /*Массивы*/
-        List<Integer> intList = Arrays.asList(1, 2, 3);
-        List<String> strList = Arrays.asList("1", "2", "3");
-        int[] intList1 = Stream.of("1", "2", "3").mapToInt(Integer::parseInt).toArray();
-        List<Integer> intList2 = Stream.of("1", "2", "3").mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
-//        Stream.of("1", "2", "3").mapToInt(Integer::parseInt).forEach(System.out::println);
-
-        // это массив
+        // тоже что и String[] arr1 = new String[] {"Max", "Aliya", "Lili", "Alice"};
         String[] arr1 = {"Max", "Aliya", "Lili", "Alice"};
         int[] arr2 = {11, 22, 33, 44};
         int[] arr3 = new int[5];
+        int[][] multiNum = {{0, 1}, {2, 3}};
+        // первый столбец второй строки
+        System.out.println(multiNum[1][0]); // 2
+        multiNum[1][0] = 22;
 
         int[] b = new int[10];
         boolean[] b1 = new boolean[10];
@@ -42,6 +51,12 @@ class ListsAndArrays {
 //        for (int i : arr22) System.out.println(i); // 11 22 33 44 0
 
         // это уже не массив а коллекция)
+        List<Integer> intList = Arrays.asList(1, 2, 3);
+        List<String> strList = Arrays.asList("1", "2", "3");
+        int[] intList1 = Stream.of("1", "2", "3").mapToInt(Integer::parseInt).toArray();
+        List<Integer> intList2 = Stream.of("1", "2", "3").mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+//        Stream.of("1", "2", "3").mapToInt(Integer::parseInt).forEach(System.out::println);
+
         // фиксированная - не смогу сделать add
         List<String> list = List.of("Max", "Aliya", "Lili", "Alice");
         List<String> arraysAsList = Arrays.asList("Max", "Aliya", "Lili", "Alice");
@@ -149,7 +164,7 @@ class Numbers {
 
     public static void main(String[] args) {
         /*Числа*/
-//        int chinaPopulation = 1360000000;
+//        int chinaPopulation = 1360000000; // int - 4 bytes
 //        int indiaPopulation = 1240000000;
 //
 //        long chinaPopulationL = 1360000000L;
@@ -215,17 +230,45 @@ class Numbers {
         System.out.println(doubleDevision1);
 
         System.out.println(Numbers.convertPoundsToKilos(200D));
+
+        // round
+        double a = 4.9;
+        int aInt = (int) a;
+        int aRound = (int) Math.round(a);
+        System.out.println(aInt); // 4 - surprise)
+        System.out.println(aRound); // 5
+
+        // int + double = double
+        int aa = 3;
+        double bb = 4.6;
+        double cc = aa + bb;
+        System.out.println(cc); // 7.6
+
+        // char Если в операциях участвуют данные типа char, то они преобразуются в int
+        int d = 'a' + 5;
+        System.out.println(d); // 102
+
     }
 }
 
 class Primitives {
     public static void main(String[] args) {
         // char
-        String name = "Max"; // 40*8 bits
+        String name = "Max \n" + "Aliya"; // 40*8 bits
+        System.out.println(name);
         char testChar = 'M'; // 2*8 bits
         char testChar1 = '\u004D'; // M в unicode https://unicode-table.com/
         System.out.println(testChar); // M
         System.out.println(testChar1); // M
+
+        // only in JDK15
+//        String text = """
+//                Вот мысль, которой весь я предан,
+//                Итог всего, что ум скопил.
+//                Лишь тот, кем бой за жизнь изведан,
+//                Жизнь и свободу заслужил.
+//                """;
+//        System.out.println(text);
 
         // boolean // predicate
         boolean isBool = true;
@@ -241,6 +284,15 @@ class Strings {
         System.out.println(str);
         System.out.println(str + " " + str);
         System.out.println((str + " ").repeat(3).trim());
+
+        String numAsString = "2022";
+        System.out.println(Integer.parseInt(numAsString));
+
+        System.out.println(str.substring(0, 2)); // Ma
+
+        String numAsStringExtra = "2022.123";
+        double numAsStringExtraDouble = Double.parseDouble(numAsStringExtra);
+        System.out.println(numAsStringExtraDouble);
     }
 }
 
@@ -296,11 +348,25 @@ class Cases {
         Set<String> keys = map.keySet();
         ArrayList<String> values = new ArrayList<>(map.values());
 
-        for (Map.Entry entry: map.entrySet()) {
+        for (Map.Entry entry : map.entrySet()) {
             System.out.println(entry);
         }
     }
 }
+
+/*
+    многострочный комментарий
+    Объявление нового класса,
+    который содержит код программы
+*/
+class Comments {   // начало объявления класса Program
+
+    // определение метода main
+    public static void main(String[] args) {    // объявление нового метода
+
+        System.out.println("Hello Java!");     // вывод строки на консоль
+    }   // конец объявления нового метода
+} // конец объявления класса Program
 
 class Methods {
     @Data
@@ -326,6 +392,15 @@ class Methods {
         checkNumber(1);
         checkNumber(-1);
         checkNumber(0);
+
+        rest("Rest args: ", 1, 2, 3);
+
+        System.out.println(sum(1, 2));
+        System.out.println(sum(1, 2, 3, 4));
+    }
+
+    public static void rest(String msg, int... args) {
+        System.out.println(msg + " " + Arrays.toString(args));
     }
 
     public static int calculate(boolean gameOver, int level, int points) {
@@ -351,6 +426,15 @@ class Methods {
         if (num < 0) System.out.println("negative");
         if (num == 0) System.out.println("zero");
     }
+
+    // method overloading
+    public static int sum(int a, int b) {
+        return a + b;
+    }
+
+    public static int sum(int... args) {
+        return Arrays.stream(args).sum();
+    }
 }
 
 class While {
@@ -368,5 +452,65 @@ class While {
             System.out.println(num);
             num++;
         } while (num < 1);
+    }
+}
+
+class ScannerClass {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your year of birth:");
+
+        boolean isYearValid = scanner.hasNextInt();
+
+        if (isYearValid) {
+            int yearOfBirth = scanner.nextInt();
+            int age = 2022 - yearOfBirth;
+            scanner.nextLine();
+
+            if (age < 0 || age > 100) {
+                System.out.println("Invalid age, should be more than 0 and less than 100");
+            } else {
+                System.out.println("Enter your name: ");
+                String name = scanner.nextLine();
+                System.out.println("Your name is " + name + ", age is: " + age);
+            }
+        } else {
+            System.out.println("Invalid age number");
+        }
+
+        scanner.close();
+    }
+}
+
+class Exceptions {
+    public static void main(String[] args) {
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter number:");
+
+            int x = scanner.nextInt();
+
+            if (x > 30) throw new Exception("number should be  < 30");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+//        tryCatchFinally();
+    }
+
+    public static void tryCatchFinally() {
+        int[] nums = new int[3];
+
+        try {
+            // раскомментируй чтобы увидеть соответсвующую ошибко
+//            nums[4] = 45;
+//            nums[4] = Integer.parseInt("sdf");
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            System.out.println("Out of bounds " + Arrays.toString(nums));
+        } catch (NumberFormatException ex) {
+            System.out.println("Convert type error " + "Integer.parseInt(\"sdf\");");
+        } finally {
+            System.out.println("finally array: " + Arrays.toString(nums));
+        }
     }
 }

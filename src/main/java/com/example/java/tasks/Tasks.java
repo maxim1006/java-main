@@ -162,3 +162,343 @@ class SumTask {
         return sum;
     }
 }
+
+class SumDigits {
+    public static void main(String[] args) {
+        System.out.println("sum of digits 125 = " + SumDigits.sumDigits(125)); // 8
+        System.out.println("sum of digits 125 = " + SumDigits.sumDigits(4)); // -1
+        System.out.println("sum of digits 125 = " + SumDigits.sumDigits(200)); // 2
+    }
+
+    private static int sumDigits(int num) {
+        if (num < 10) return -1;
+
+        int sum = 0;
+
+        while (num > 0) {
+            // так прикольно получать цифры по одной
+            sum += num % 10;
+            num /= 10;
+        }
+
+        return sum;
+    }
+}
+
+class NumberPalindrome {
+    public static void main(String[] args) {
+        System.out.println(NumberPalindrome.isPalindrome(-222));
+    }
+
+    public static boolean isPalindrome(int number) {
+        int positiveNumber = Math.abs(number);
+
+        StringBuffer reversedNumber = new StringBuffer(positiveNumber + "").reverse();
+        return (positiveNumber + "").equals(reversedNumber.toString());
+    }
+}
+
+class FirstLastDigitSum {
+    public static void main(String[] args) {
+        System.out.println(FirstLastDigitSum.sumFirstAndLastDigit(123));
+    }
+
+    public static int sumFirstAndLastDigit(int number) {
+        if (number < 0) return -1;
+
+        String str = Integer.toString(number);
+        String first = str.substring(0, 1);
+        String last = str.substring(str.length() - 1);
+
+        return Integer.parseInt(first) + Integer.parseInt(last);
+    }
+}
+
+class EvenDigitSum {
+    public static void main(String[] args) {
+        System.out.println(EvenDigitSum.getEvenDigitSum(1234));
+    }
+
+    public static int getEvenDigitSum(int number) {
+        if (number < 0) return -1;
+
+        int sum = 0;
+
+        while (number > 0) {
+            // так прикольно получать цифры по одной
+            int current = number % 10;
+
+            if (current % 2 == 0) sum += current;
+
+            number /= 10;
+        }
+
+        return sum;
+    }
+}
+
+class SharedDigit {
+    public static void main(String[] args) {
+        System.out.println(SharedDigit.hasSharedDigit(12, 23));
+    }
+
+    public static boolean hasSharedDigit(int num, int num1) {
+        if (num < 10 || num > 99) return false;
+        if (num1 < 10 || num1 > 99) return false;
+
+        String str = Integer.toString(num);
+        String str1 = Integer.toString(num1);
+
+        for (int i = 0; i < str.length(); i++) {
+            if (str1.contains(str.charAt(i) + "")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+class LastDigitChecker {
+    public static void main(String[] args) {
+        System.out.println(LastDigitChecker.hasSameLastDigit(41, 22, 71));
+    }
+
+    public static boolean hasSameLastDigit(int num, int num1, int num2) {
+        if (!LastDigitChecker.isValid(num) || !LastDigitChecker.isValid(num1) || !LastDigitChecker.isValid(num2))
+            return false;
+
+        char numChar = Integer.toString(num).charAt((num + "").length() - 1);
+        char num1Char = Integer.toString(num1).charAt((num1 + "").length() - 1);
+        char num2Char = Integer.toString(num2).charAt((num2 + "").length() - 1);
+
+        if (numChar == num1Char || num1Char == num2Char || numChar == num2Char) return true;
+
+        return false;
+    }
+
+    public static boolean isValid(int num) {
+        return num > 9 && num < 1001;
+    }
+}
+
+class GreatestCommonDivisor {
+    public static void main(String[] args) {
+        System.out.println(GreatestCommonDivisor.getGreatestCommonDivisor(1010, 10));
+    }
+
+    public static int getGreatestCommonDivisor(int first, int second) {
+        if (first < 10 || second < 10) return -1;
+
+        int divisor = 1;
+        int counter = 1;
+
+        while (counter <= first && counter <= second) {
+            if (first % counter == 0 && second % counter == 0 && counter > divisor) {
+                divisor = counter;
+            }
+
+            counter++;
+        }
+
+        return divisor;
+    }
+}
+
+class FactorPrinter {
+    public static void main(String[] args) {
+        FactorPrinter.printFactors(6);
+    }
+
+    public static void printFactors(int num) {
+        if (num < 1) {
+            System.out.println("Invalid Value");
+            return;
+        }
+
+        int counter = 1;
+
+        while (counter <= num) {
+            if (num % counter == 0) {
+                System.out.println(counter);
+            }
+
+            counter++;
+        }
+    }
+}
+
+class PerfectNumber {
+    public static void main(String[] args) {
+        System.out.println(PerfectNumber.isPerfectNumber(6)); // true
+        System.out.println(PerfectNumber.isPerfectNumber(7)); // false
+    }
+
+    public static boolean isPerfectNumber(int num) {
+        if (num < 1) return false;
+
+        int counter = 1;
+        int sum = 0;
+
+        while (counter < num) {
+            if (num % counter == 0) {
+                sum += counter;
+            }
+
+            counter++;
+        }
+
+        return sum == num;
+    }
+}
+
+class NumberToWords {
+    public static enum NumberToWordsEnum {
+        Zero("Zero"),
+        One("One"),
+        Two("Two"),
+        Three("Three"),
+        Four("Four"),
+        Five("Five"),
+        Six("Six"),
+        Seven("Seven"),
+        Eight("Eight"),
+        Nine("Nine");
+
+        NumberToWordsEnum(String name) {
+            this.name = name;
+        }
+
+        private final String name;
+
+        public String getName() {
+            return name;
+        }
+    }
+
+    private static final String[] dayList = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
+
+    public static void main(String[] args) {
+        NumberToWords.numberToWords(123);
+    }
+
+    public static void numberToWords(int num) {
+        if (num < 0) {
+            System.out.println("Invalid value");
+            return;
+        }
+
+        String str = num + "";
+
+        for (int i = 0; i < str.length(); i++) {
+            char currentChar = str.charAt(i);
+            int currentNum = Integer.parseInt(currentChar + "");
+            System.out.println(dayList[currentNum]);
+        }
+    }
+}
+
+class FlourPacker {
+    public static void main(String[] args) {
+        System.out.println(FlourPacker.canPack(1, 0, 4));
+        System.out.println(FlourPacker.canPack(1, 0, 5));
+        System.out.println(FlourPacker.canPack(0, 5, 6));
+        System.out.println(FlourPacker.canPack(4, 18, 19));
+    }
+
+    public static boolean canPack(int bigCount, int smallCount, int goal) {
+        if (bigCount < 0 || smallCount < 0 || goal <= 0) return false;
+
+        while (bigCount > 0 && goal > 0) {
+            if (goal - 5 >= 0) goal -= 5;
+            if (goal == 0) return true;
+
+            --bigCount;
+        }
+
+        while (smallCount > 0 && goal > 0) {
+            goal -= 1;
+
+            if (goal == 0) return true;
+
+            --smallCount;
+        }
+
+        return false;
+    }
+}
+
+class LargestPrime {
+    public static void main(String[] args) {
+        System.out.println(LargestPrime.getLargestPrime(10));
+    }
+
+    public static int getLargestPrime(int num) {
+        if (num <= 1) return -1;
+
+        int counter = 1;
+        int result = 0;
+
+        class Local {
+            boolean isPrime(int n) {
+                if (n <= 1) return false;
+
+                for (int i = 2; i <= n / 2; i++) {
+                    if (n % i == 0) return false;
+                }
+
+                return true;
+            }
+        }
+
+        Local local = new Local();
+
+        while (num >= counter) {
+            if (num % counter == 0 && local.isPrime(counter) && counter > result) result = counter;
+            ++counter;
+        }
+
+        return result;
+    }
+}
+
+class DiagonalStar {
+    public static void main(String[] args) {
+        DiagonalStar.printSquareStar(8);
+    }
+
+    public static void printSquareStar(int num) {
+        if (num < 5) {
+            System.out.println("Invalid value");
+            return;
+        }
+
+        int row = 1;
+        int column;
+
+        while (num >= row) {
+            column = 1;
+
+            while (num >= column) {
+
+                if (row == num
+                    || row == 1
+                    || column == 1
+                    || column == num
+                    || row == column
+                    || column == (num - row + 1)
+                ) {
+                    System.out.print("*");
+                } else {
+                    System.out.print(" ");
+                }
+
+                ++column;
+            }
+
+            System.out.println();
+
+            ++row;
+        }
+    }
+}
