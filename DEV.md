@@ -30,3 +30,6 @@ ctrl+shift+r - launch main in class
 
 ### live templates
 sout - System.out.println()
+
+### modifiers
+static, final, public, private, protected

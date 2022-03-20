@@ -482,7 +482,7 @@ class ScannerClass {
     }
 }
 
-class Exceptions {
+class TryCatchExceptions {
     public static void main(String[] args) {
         try {
             Scanner scanner = new Scanner(System.in);
@@ -511,6 +511,84 @@ class Exceptions {
             System.out.println("Convert type error " + "Integer.parseInt(\"sdf\");");
         } finally {
             System.out.println("finally array: " + Arrays.toString(nums));
+        }
+    }
+}
+
+class TryCatchFinallyTest {
+    public static int stringSize(Object s) {
+        int len = 0;
+
+        try {
+            len = s.toString().length();
+            return -22;
+        } catch (Exception ex) {
+            len = -1;
+            return -11;
+            // если есть finally то он вызовется всегда) даже если return поставлю в true, catch
+            // если убрать finally то будет человеческий return
+        } finally {
+            return len;
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(stringSize("string"));
+        System.out.println(stringSize(null));
+    }
+}
+
+class Switch {
+    public static void main(String[] args) {
+        int switchValue = 3;
+        char switchCharValue = 'A';
+        String month = "January".toLowerCase();
+
+        switch (switchValue) {
+            case 1: {
+                System.out.println("Value 1");
+                break;
+            }
+
+            case 3:
+            case 4:
+            case 5: {
+                System.out.println("Value 3,4,5");
+            }
+
+            default: {
+                System.out.println("default");
+            }
+        }
+
+        switch (switchCharValue) {
+            case 'A':
+            case 'B':
+            case 'C':
+            case 'D':
+            case 'E': {
+                System.out.println("A, B, C, D, E");
+                break;
+            }
+
+            default: {
+                System.out.println("Was not 1,2,3,4");
+                break;
+            }
+        }
+
+        switch (month) {
+            case "january": {
+                System.out.println("January");
+                break;
+            }
+
+            case "february": {
+                System.out.println("February");
+                break;
+            }
+
+            default: {}
         }
     }
 }
