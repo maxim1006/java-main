@@ -2,6 +2,7 @@ package com.example.java.basics;
 
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class Classes {
     }
 
     private void privateMethod() {
-        // могу из обычного метода достучаться до static
+        // могу из обычного метода достучаться до static, а наоборот не могу
         Class1 c1 = new Class1();
     }
 
@@ -56,8 +57,8 @@ public class Classes {
 
         Class2 c2 = new Class2("Max", 1);
         c2.num = 1;
-        System.out.println(c2.num + " " + c2.str);
-        System.out.println(new Gson().toJson(c2));
+//        System.out.println(c2.num + " " + c2.str);
+//        System.out.println(new Gson().toJson(c2));
 
 //        System.out.println(c1.getNum()); // 1
 //        System.out.println(c1.getStr()); // str
@@ -68,11 +69,30 @@ public class Classes {
         singletonInstance.f();
 
         // пример final
-        FinalClass finalClass = new FinalClass();
+//        FinalClass finalClass = new FinalClass();
 //        finalClass.prop = 2 // ошибко
 //        FinalClass.staticProp = 2; // ошибко
 
 //        throw new IOException();
+
+        BuilderTest builderTest = new BuilderTest();
+        System.out.println(new Gson().toJson(builderTest.buildInner())); // {"prop":"Max","prop1":"Max1"}
+    }
+
+    // Builder дает возможность строить классы
+    public static class BuilderTest {
+        public BuilderInner buildInner() {
+            return BuilderInner.builder().prop("Max").prop1("Max1").build();
+        }
+
+        @Data
+        @Builder
+        private static class BuilderInner {
+            private String prop;
+            private String prop1;
+            private String prop2;
+            private String prop3;
+        }
     }
 }
 
@@ -82,14 +102,20 @@ class ConstructorExample {
         public void addStudent(ConstructorExample student);
     }
 
-    String name;
+    private String name;
+    private String prop;
 
-    public ConstructorExample(String name) {
+    public ConstructorExample(String name, String prop) {
         this.name = name;
     }
 
     public ConstructorExample() {
-        this("No Name"); // overload
+        // классный пример, могу в таком конструкторе вызывать любые overloaded конструкторы с соответствующими пропертями
+        this("No Name", "Default prop"); // overload
+    }
+
+    public ConstructorExample(String prop) {
+        this("No Name", prop); // overload
     }
 
     public void addToGroup(Group group) {
@@ -109,6 +135,28 @@ class Singleton {
 
     public static Singleton getInstance() {
         return INSTANCE;
+    }
+}
+
+class Singleton2 {
+    static Singleton2 instance;
+
+    static double num;
+
+    public Singleton2() {
+        if (Singleton2.instance != null) return;
+
+        Singleton2.instance = this;
+        num = Math.random();
+    }
+}
+
+class Test {
+    public static void main(String[] args) {
+        System.out.println(new Singleton2());
+        System.out.println(Singleton2.instance);
+        System.out.println(Singleton2.instance);
+        System.out.println(Singleton2.instance.equals(Singleton2.instance)); // true
     }
 }
 
@@ -468,4 +516,204 @@ class EnumClass {
             this.day = day;
         }
     }
+}
+
+class ObjectMethods {
+    public static void main(String[] args) {
+        ToString toString = new ToString();
+        ToString1 toString1 = new ToString1("Max");
+        ToString1 toString2 = new ToString1("Aliya");
+        ToString1 toString3 = new ToString1("Max");
+
+        System.out.println(toString.toString() + " " + toString1.toString()); // com.example.java.basics.ObjectMethods$ToString@210366b4 Test Max
+
+        // могу использовать hashCode чтобы сравнить объекты
+        System.out.println(toString.hashCode() + " " + toString1.hashCode()); // 250370634 1325808650
+        System.out.println(toString.getClass() + " " + toString1.getClass()); // class com.example.java.basics.ObjectMethods$ToString class com.example.java.basics.ObjectMethods$ToString1
+
+        System.out.println(toString2.equals(toString1)); // false
+        System.out.println(toString2.equals(toString)); // false
+        // без переопределения метода тоже был бы false, оставил в качестве примера сравнения
+        System.out.println(toString3.equals(toString1)); // true
+    }
+
+    public static class ToString {
+    }
+
+    public static class ToString1 {
+        private String name;
+        private Object id;
+
+        public ToString1(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "Test " + name;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+
+            if (!(obj instanceof ToString1)) return false;
+
+            ToString1 p = (ToString1) obj;
+            return this.name.equals(p.name);
+        }
+    }
+}
+
+class Generics {
+    public static void main(String[] args) {
+        Generics.simpleGeneric();
+    }
+
+    static void simpleGeneric() {
+        Generic<String> generic = new Generic("Max");
+        Generic<Integer> generic1 = new Generic(123);
+
+        System.out.println(generic.getId());
+        System.out.println(generic1.getId());
+
+        String[] strArr = {"Max", "Aliya"};
+        generic.<String>print(strArr);
+
+        Integer[] intArr = {123, 456};
+        generic.<Integer>print(intArr);
+    }
+
+    // если хочу передавать только определенных наследников
+    static void narrowingGeneric() {
+        NarrowGenericSource narrowGenericSource = new NarrowGenericSource(123, "Max");
+        NarrowGeneric<NarrowGenericSource> narrowGeneric = new NarrowGeneric<NarrowGenericSource>(narrowGenericSource);
+    }
+
+    interface GenericModel<T> {
+        T getId();
+    }
+
+    public static class Generic<T> implements GenericModel<T> {
+        private T name;
+
+        Generic(T name) {
+            this.name = name;
+        }
+
+        public T getId() {
+            return name;
+        }
+
+        public <T> void print(T[] items) {
+            for (T item : items) {
+                System.out.println(item);
+            }
+        }
+    }
+
+    // непонятно зачем но можно делать так
+    public static class GenericConstructor {
+        private String tProp;
+
+        <T> GenericConstructor(T tProp) {
+            this.tProp = tProp.toString();
+        }
+    }
+
+    public static class NarrowGeneric<T extends NarrowGenericSource> {
+        private int id;
+        private String str;
+
+        NarrowGeneric(T source) {
+            this.id = source.getId();
+            this.str = source.getStr();
+        }
+    }
+
+    private static class NarrowGenericSource {
+        private int id;
+        private String str;
+
+        NarrowGenericSource(int id, String str) {
+            this.id = id;
+            this.str = str;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getStr() {
+            return str;
+        }
+    }
+}
+
+class Clones {
+    public static void main(String[] args) {
+        // это подойдет если внутри класса Cloned не будет вложенных объектов, если будут, то надо во всех классах по цепочке реализовывать clone
+        try {
+            Cloned cloned = new Cloned("Max");
+            Cloned cloned1 = cloned.clone();
+            cloned1.setName("Aliya");
+            cloned.display(); // MAX
+        } catch (CloneNotSupportedException ex) {
+            System.out.println("Clonable not implemented");
+        }
+
+        String str = "";
+
+        System.out.println(str.isEmpty());
+    }
+
+    public static class Cloned implements Cloneable {
+        private String name;
+
+        Cloned(String name) {
+            this.name = name;
+        }
+
+        void setName(String name) {
+            this.name = name;
+        }
+
+        void display() {
+            System.out.printf("Person %s \n", name);
+        }
+
+        public Cloned clone() throws CloneNotSupportedException {
+            return (Cloned) super.clone();
+        }
+    }
+}
+
+class Point {
+    public Point() {
+    }
+
+    private int x;
+    private int y;
+
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+
 }

@@ -11,6 +11,9 @@ short (-32768 до 32767 и занимает 2 байта),
 float (число с плавающей точкой от -3.4*1038 до 3.4*1038 и занимает 4 байта), 
 **double** (число с плавающей точкой от ±4.9*10-324 до ±1.8*10308 и занимает 8 байт)
 
+### Classes
+Фактически все классы наследуются от класса Object. Все остальные классы являются неявно производными от класса Object. Поэтому все типы и классы могут реализовать те методы, которые определены в классе Object.
+
 ### helpful
 https://unicode-table.com/ru
 
@@ -22,7 +25,7 @@ Remainder/Modulo operator: 4 % 3 = 1 (the remainder of (4 % 3) = 1)
 dividend / divisor = quotient
 
 ### multiplication
-factor * factor = product  
+factor(multiplier) * factor(multiplier) = product(multiplication)  
 
 ### shortcuts
 cmd+option+l - reformat code
@@ -31,5 +34,11 @@ ctrl+shift+r - launch main in class
 ### live templates
 sout - System.out.println()
 
-### modifiers
+### access modifiers
 static, final, public, private, protected
+
+### initialize
+числа - с 0 и 0.0
+char - \u0000
+boolean - false
+Object and String - null

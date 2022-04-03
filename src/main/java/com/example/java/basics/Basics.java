@@ -285,6 +285,14 @@ class Strings {
         System.out.println(str + " " + str);
         System.out.println((str + " ").repeat(3).trim());
 
+        String strB = "strB";
+        String strB1 = "strB1";
+
+        StringBuilder builder = new StringBuilder(strB);
+        builder.append(strB1);
+
+        System.out.println(builder); // strBstrB1
+
         String numAsString = "2022";
         System.out.println(Integer.parseInt(numAsString));
 
@@ -293,6 +301,13 @@ class Strings {
         String numAsStringExtra = "2022.123";
         double numAsStringExtraDouble = Double.parseDouble(numAsStringExtra);
         System.out.println(numAsStringExtraDouble);
+
+        StringBuilder strBuilderReplace = new StringBuilder("");
+        strBuilderReplace.append("a\n");
+        strBuilderReplace.append("b\n");
+        strBuilderReplace.append("c");
+        System.out.println(strBuilderReplace.toString()); // a на след строке b на след строке с
+        System.out.println(strBuilderReplace.toString().replace("\n", "")); // abс
     }
 }
 

@@ -1,10 +1,10 @@
 package com.example.java.basics;
 
-//Полиморфизм - использование объектов с одинаковыми интерфейсами без информации о типе и внутренней структуре объектов
+//Полиморфизм - использование объектов с одинаковыми интерфейсами без информации о типе и внутренней структуре объектов, при этом и то и другое Clock но могу вызвать preciseClock.toString();
 
 public class Poly {
     public static void main(String[] args) {
-        PreciseClock preciseClock = new PreciseClock();
+        Clock preciseClock = new PreciseClock();
 
         System.out.println(preciseClock.toString());
     }
