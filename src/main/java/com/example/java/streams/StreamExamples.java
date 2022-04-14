@@ -1,11 +1,17 @@
 package com.example.java.streams;
 
+import com.example.service.AbstractService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Any;
+import javax.enterprise.inject.Instance;
+import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -55,6 +61,20 @@ public class StreamExamples {
 //        DoubleFunction<String> valuOf = String::valueOf;
 //        System.out.println(valuOf);
 
+    }
+
+
+    @Inject
+    @Any
+    Instance<AbstractService> abstractService;
+
+    public Map<String, AbstractService> viewModelFactoriesMap;
+
+    @PostConstruct
+    public void createFactories() {
+        viewModelFactoriesMap = abstractService
+                .stream()
+                .collect(Collectors.toMap(AbstractService::getType, Function.identity()));
     }
 
     private static void intermediateOperations() {

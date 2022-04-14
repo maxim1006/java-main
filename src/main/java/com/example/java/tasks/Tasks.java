@@ -2,6 +2,8 @@ package com.example.java.tasks;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Tasks {
 }
@@ -500,5 +502,46 @@ class DiagonalStar {
 
             ++row;
         }
+    }
+}
+
+//    function findChar(str) {
+//        let o = {};
+//
+//        for (let char of str) {
+//            o[char] = o[char] ? ++o[char] : 1;
+//        }
+//
+//        return Object.keys(o).find(char => o[char]%2);
+//    }
+//
+//console.log(findChar("abb")); // a
+
+class Test {
+    public static void main(String[] args) {
+        System.out.println(find("abb"));
+    }
+
+    static Character find(String str) {
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            char currentChar = str.charAt(i);
+
+            if (map.get(currentChar) != null) {
+                int cur = map.get(currentChar);
+                map.put(currentChar, ++cur);
+            } else {
+                map.put(currentChar, 1);
+            }
+        }
+
+        return map
+                .entrySet()
+                .stream()
+                .filter(i -> i.getValue()%2 != 0)
+                .findFirst()
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 }

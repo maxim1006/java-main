@@ -2,6 +2,7 @@ package com.example.java.lombok;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 // ставлю private чтобы доступ был только через сеттеры
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 class ExampleModel {
     private String str;
     private int num;

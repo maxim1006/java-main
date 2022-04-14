@@ -1,9 +1,12 @@
 package com.example.java.basics;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
@@ -233,14 +236,32 @@ class OuterNestedClass {
     }
 }
 
+@Slf4j
 class OOP {
     public static void main(String[] args) {
-        Encapsulation e = new Encapsulation(-1);
-        ExtendedPerson extendedPerson = new ExtendedPerson("Max");
+        try {
+            Encapsulation e = new Encapsulation(-1);
+            ExtendedPerson extendedPerson = new ExtendedPerson("Max");
+            String extendedPersonJson = new ObjectMapper().writeValueAsString(extendedPerson);
+            String extendedPersonJson1 = new Gson().toJson(extendedPerson);
 
-        System.out.printf("%d", e.age);
-        System.out.println(new Gson().toJson(extendedPerson)); // {"name":"Max","age":30}
-        System.out.println(extendedPerson.age + " " + extendedPerson.getAge()); // 30 34
+            System.out.printf("%d", e.age);
+            System.out.println(extendedPersonJson); // а тут ничего))
+            System.out.println(new Gson().toJson(extendedPerson)); // {"name":"Max","age":30}
+            System.out.println(extendedPerson.age + " " + extendedPerson.getAge()); // 30 34
+
+            Gson gson = new Gson();
+            ExtendedPerson extendedPersonFromJson = gson.fromJson(extendedPersonJson, new TypeToken<ExtendedPerson>() {
+            }.getType());
+
+            ExtendedPerson extendedPersonFromJson1 = gson.fromJson(extendedPersonJson1, new TypeToken<ExtendedPerson>() {
+            }.getType());
+
+            System.out.println(extendedPersonFromJson);
+            System.out.println(extendedPersonFromJson1);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     private static class Encapsulation {
