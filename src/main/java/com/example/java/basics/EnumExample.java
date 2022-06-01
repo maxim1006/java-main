@@ -1,5 +1,7 @@
 package com.example.java.basics;
 
+import com.example.java.enums.EnumEtalon;
+
 enum MyEnum {
     CONST, CONST1, CONST2;
 }
@@ -22,5 +24,8 @@ public class EnumExample {
     public static void main(String[] args) {
         System.out.println(MyEnum.CONST); // CONST
         System.out.println(MyEnum1.Prop.getName()); // 123
+        System.out.println(EnumEtalon.ALL); // all
     }
 }
+
+

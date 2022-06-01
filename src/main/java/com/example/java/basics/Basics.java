@@ -3,6 +3,9 @@ package com.example.java.basics;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -115,6 +118,9 @@ class ListsAndArrays {
 //            System.out.println("i " + i);
 //            System.out.println("j " + j);
 //        }
+
+        // сделать из 1го айтема лист
+        List<String> singletonList = Collections.singletonList("Max");
     }
 }
 
@@ -223,11 +229,11 @@ class Numbers {
         double doubleDevision = 5D / 2D; // 2.5
         double doubleDevision1 = 5D / 3D; // 1.6666666666666667
 
-        System.out.println(intDevision);
-        System.out.println(floatDevision);
-        System.out.println(doubleDevision);
-        System.out.println(floatDevision1);
-        System.out.println(doubleDevision1);
+//        System.out.println(intDevision);
+//        System.out.println(floatDevision);
+//        System.out.println(doubleDevision);
+//        System.out.println(floatDevision1);
+//        System.out.println(doubleDevision1);
 
         System.out.println(Numbers.convertPoundsToKilos(200D));
 
@@ -235,19 +241,29 @@ class Numbers {
         double a = 4.9;
         int aInt = (int) a;
         int aRound = (int) Math.round(a);
-        System.out.println(aInt); // 4 - surprise)
-        System.out.println(aRound); // 5
+//        System.out.println(aInt); // 4 - surprise)
+//        System.out.println(aRound); // 5
 
         // int + double = double
         int aa = 3;
         double bb = 4.6;
         double cc = aa + bb;
-        System.out.println(cc); // 7.6
+//        System.out.println(cc); // 7.6
 
         // char Если в операциях участвуют данные типа char, то они преобразуются в int
         int d = 'a' + 5;
-        System.out.println(d); // 102
+//        System.out.println(d); // 102
 
+        BigInteger integer = new BigInteger("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+
+        BigDecimal decimal = new BigDecimal("123.444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444");
+
+        BigDecimal decimalTest = decimal.multiply(
+                BigDecimal.valueOf(100)
+        );
+        System.out.println(decimalTest);
+        System.out.println(decimal.setScale(0, RoundingMode.CEILING));
+        System.out.println(decimal.stripTrailingZeros());
     }
 }
 
@@ -366,6 +382,11 @@ class Cases {
         for (Map.Entry entry : map.entrySet()) {
             System.out.println(entry);
         }
+
+        //  так могу создать простую мапу
+        Map.of(
+                "Key", "Value"
+        );
     }
 }
 

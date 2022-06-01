@@ -42,3 +42,12 @@ static, final, public, private, protected
 char - \u0000
 boolean - false
 Object and String - null
+
+### Cache
+@CacheInvalidateAll(cacheName = "webContent")
+@CacheResult(cacheName = "webContent")
+
+### Exclude props from objects and JSON
+https://fasterxml.github.io/jackson-annotations/javadoc/2.9/com/fasterxml/jackson/annotation/JsonInclude.html
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class QualificationPriceViewModel {
