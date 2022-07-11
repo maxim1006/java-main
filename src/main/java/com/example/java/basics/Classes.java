@@ -77,6 +77,7 @@ public class Classes {
 //        FinalClass.staticProp = 2; // ошибко
 
 //        throw new IOException();
+//        throw new InternalServerErrorException("Sim Activation Failed");
 
         BuilderTest builderTest = new BuilderTest();
         System.out.println(new Gson().toJson(builderTest.buildInner())); // {"prop":"Max","prop1":"Max1"}

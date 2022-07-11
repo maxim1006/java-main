@@ -60,7 +60,7 @@ class ListsAndArrays {
         List<Integer> intList2 = Stream.of("1", "2", "3").mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
 //        Stream.of("1", "2", "3").mapToInt(Integer::parseInt).forEach(System.out::println);
 
-        // фиксированная - не смогу сделать add
+        // фиксированная - не могу сделать add
         List<String> list = List.of("Max", "Aliya", "Lili", "Alice");
         List<String> arraysAsList = Arrays.asList("Max", "Aliya", "Lili", "Alice");
         // расширяемая - смогу сделать add

@@ -11,11 +11,12 @@ public class ModelExtend {
 
     public ModelExtend(ModelExtendModel1 modelExtendModel) {
 //        ModelExtend.modelExtendModel1 = modelExtendModel;
+        System.out.println(modelExtendModel11);
         ModelExtend.modelExtendModelStatic = modelExtendModel11;
     }
 
     public static void main(String[] args) {
-        ModelExtend.modelExtendModelStatic.f();
+//        ModelExtend.modelExtendModelStatic.f();
         ModelExtend.modelExtendModel1.f();
     }
 }

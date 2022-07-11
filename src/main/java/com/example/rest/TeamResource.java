@@ -1,6 +1,6 @@
 package com.example.rest;
 
-import com.example.model.Team;
+import com.example.models.Team;
 import com.example.service.TeamService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

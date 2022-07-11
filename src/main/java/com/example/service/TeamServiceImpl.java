@@ -1,7 +1,7 @@
 package com.example.service;
 
-import com.example.model.Team;
-import com.example.model.TeamMember;
+import com.example.models.Team;
+import com.example.models.TeamMember;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -13,7 +13,7 @@ import java.util.List;
 @ApplicationScoped
 public class TeamServiceImpl implements TeamService {
     private final List<Team> TEAMS = Collections.unmodifiableList(
-            Arrays.asList(
+            List.of(
                     new Team(
                             "1",
                             "UX",

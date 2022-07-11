@@ -1,6 +1,6 @@
 package com.example.java.chips.lambda;
 
-import com.example.model.TeamMember;
+import com.example.models.TeamMember;
 
 import java.util.*;
 

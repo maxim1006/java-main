@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.model.Team;
+import com.example.models.Team;
 import io.quarkus.arc.DefaultBean;
 
 import javax.enterprise.context.ApplicationScoped;

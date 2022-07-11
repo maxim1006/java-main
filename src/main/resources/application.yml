@@ -18,6 +18,11 @@ quarkus:
 
 portal:
   default-locale: en-US
+  test:
+    names:
+      test-name: "testName"
+      test-name1: "testName1"
+      test-name2: "testName2"
   locales:
     "en-US":
       direction: LTR

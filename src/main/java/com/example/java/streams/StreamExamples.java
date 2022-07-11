@@ -3,6 +3,7 @@ package com.example.java.streams;
 import com.example.service.AbstractService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.apache.commons.collections.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Any;
@@ -32,6 +33,11 @@ public class StreamExamples {
 
         String[] strings1 = {"a1", "a2", "a3"};
         Stream<String> stream2 = Arrays.stream(strings1).parallel();
+
+        String strFromMap = strings.stream()
+                .filter(i -> i.equals("1"))
+                .findFirst()
+                .orElse(null);
 
 
         Stream<Integer> stream3 = Stream.iterate(1, integer -> integer + 1);
@@ -90,10 +96,18 @@ public class StreamExamples {
                 .collect(Collectors.toConcurrentMap(val -> val, val -> val));
 
         Collection<Person> people = Arrays.asList(
-                new Person("aВася", 16, Sex.MAN),
-                new Person("AПетя", 23, Sex.MAN),
-                new Person("Елена", 42, Sex.WOMEN),
-                new Person("Иван Иванович", 69, Sex.MAN)
+                new Person("Max", 16, Sex.MAN,
+                        List.of(new Person("aMax", 16, Sex.MAN, List.of()))
+                ),
+                new Person("Aliya", 23, Sex.MAN,
+                        List.of(new Person("aAliya", 16, Sex.MAN, List.of()))
+                ),
+                new Person("Lili", 42, Sex.WOMEN,
+                        List.of(new Person("aLili", 16, Sex.MAN, List.of()))
+                ),
+                new Person("Alice", 69, Sex.MAN,
+                        List.of(new Person("aAlice", 16, Sex.MAN, List.of()))
+                )
         );
 
 //        IntSummaryStatistics statistics = people.stream()
@@ -135,6 +149,7 @@ public class StreamExamples {
         private final String name;
         private final Integer age;
         private final Sex sex;
+        private final List<Person> persons;
 
         @Override
         public String toString() {
@@ -144,5 +159,43 @@ public class StreamExamples {
                     ", sex=" + sex +
                     '}';
         }
+    }
+}
+
+class MultipleFilters {
+    public static void main(String[] args) {
+        Collection<StreamExamples.Person> people = Arrays.asList(
+                new StreamExamples.Person("Max", 16, StreamExamples.Sex.MAN,
+                        List.of(new StreamExamples.Person("aMax", 16, StreamExamples.Sex.MAN, List.of()))
+                ),
+                new StreamExamples.Person("Aliya", 23, StreamExamples.Sex.MAN,
+                        List.of(new StreamExamples.Person("aAliya", 16, StreamExamples.Sex.MAN, List.of()))
+                ),
+                new StreamExamples.Person("Lili", 42, StreamExamples.Sex.WOMEN,
+                        List.of(new StreamExamples.Person("aLili", 16, StreamExamples.Sex.MAN, List.of()))
+                ),
+                new StreamExamples.Person("Alice", 69, StreamExamples.Sex.MAN,
+                        List.of(new StreamExamples.Person("aAlice", 16, StreamExamples.Sex.MAN, List.of()))
+                )
+        );
+
+        StreamExamples.Person personFromPeople = people
+                .stream()
+                // проверка на то что коллекция не пустая чтобы дальше не падали null pointers
+                .filter(slo -> CollectionUtils.isNotEmpty(people))
+                .filter(i -> i.getName()
+                        .equals("Max")
+                )
+                .findFirst().flatMap(i -> i.getPersons()
+                        .stream()
+                        .filter(item -> item.getName()
+                                .equals("aMax")
+                        )
+                        .findFirst())
+                .orElse(null);
+        // если все же хочу новый массив
+//        .findFirst().orElse(new ArrayList<>());
+
+        System.out.println(personFromPeople);
     }
 }
