@@ -52,6 +52,19 @@ class EnumExample1 {
         CheckoutStepName test1 = CheckoutStepTask.getByCheckoutStep("updateDetails");
         System.out.println(test); // "addToCart"
         System.out.println(test1); // "details"
+
+
+        String testStr = "details";
+        CheckoutStepName testStrEnum = CheckoutStepName.DETAILS;
+
+        // нехорошо
+        if (testStr.equals(CheckoutStepName.DETAILS.toString())) {
+            System.out.println(true);
+        }
+        // лучше
+        if (CheckoutStepName.DETAILS.equals(testStrEnum)) {
+            System.out.println(false);
+        }
     }
 }
 

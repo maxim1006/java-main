@@ -2,6 +2,7 @@ package com.example.java.basics;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -625,6 +626,31 @@ class Switch {
             }
 
             default: {}
+        }
+    }
+}
+
+@Slf4j
+class Await {
+    public static void main(String[] args) {
+        boolean processing = true;
+        int counter = 0;
+
+        while (processing) {
+            try {
+                System.out.println("counter " + counter);
+                System.out.println(new Date());
+
+                if (counter == 5) {
+                    processing = false;
+                }
+
+                Thread.sleep(1000);
+                counter++;
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                Thread.currentThread().interrupt();
+            }
         }
     }
 }

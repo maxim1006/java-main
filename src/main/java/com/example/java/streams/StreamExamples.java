@@ -4,6 +4,7 @@ import com.example.service.AbstractService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Any;
@@ -197,5 +198,16 @@ class MultipleFilters {
 //        .findFirst().orElse(new ArrayList<>());
 
         System.out.println(personFromPeople);
+
+        Map<String, String> mapEx = new HashMap<>();
+        mapEx.put("Greeting", "Hi mom!");
+
+        if (MapUtils.isNotEmpty(mapEx)) {
+            System.out.println("really hi)");
+        }
+
     }
 }
+
+
+//

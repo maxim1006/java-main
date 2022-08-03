@@ -1,11 +1,13 @@
 package com.example.java.basics;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -97,6 +99,28 @@ public class Classes {
             private String prop2;
             private String prop3;
         }
+    }
+}
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+class BuilderTestModel {
+    String str = "Max";
+    String str1 = "Max1";
+    String str2;
+}
+
+class BuilderTest {
+    public static void main(String[] args) {
+        // {"str":"Hi mom"}
+        System.out.println(new Gson().toJson(BuilderTestModel.builder().str("Hi mom").build()));
+        // {"str":"Max","str1":"Max1"}
+        System.out.println(new Gson().toJson(new BuilderTestModel()));
+        // {"str":"1","str1":"2","str2":"3"}
+        System.out.println(new Gson().toJson(new BuilderTestModel("1", "2", "3")));
     }
 }
 
@@ -454,7 +478,7 @@ class InterfaceClass {
         }
     }
 
-    // в абстрактном классе могу реализовать только часть методов, остальное с наследнека
+    // в абстрактном классе могу реализовать только часть методов, остальное с наследника
     abstract static class TestClass1 implements TestModel {
         @Override
         public void print() {

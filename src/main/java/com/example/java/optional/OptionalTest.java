@@ -1,7 +1,9 @@
 package com.example.java.optional;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Optional;
 
@@ -29,8 +31,24 @@ public class OptionalTest {
     }
 }
 
-class Test {
-    public static void main(String[] args) {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+class Content {
+    String text;
+}
 
+class Test {
+    public static Content getInstance() {
+        boolean rand = Math.random() > 0.5;
+        Content content = rand ? new Content("content") : null;
+        System.out.println(content + " " + rand);
+        return content;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Optional.ofNullable(getInstance()).map(Content::getText).orElse(null));
+        System.out.println(Optional.ofNullable(getInstance()).map(Content::getText).orElse(null));
+        System.out.println(Optional.ofNullable(getInstance()).map(Content::getText).orElse(null));
     }
 }
