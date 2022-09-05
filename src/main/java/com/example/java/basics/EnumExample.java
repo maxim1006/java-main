@@ -1,7 +1,9 @@
 package com.example.java.basics;
 
 import com.example.java.enums.EnumEtalon;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -123,4 +125,22 @@ enum CheckoutStepTask {
     }
 }
 
+class EnumExample3 {
+    public static void main(String[] args) {
+        ObjectMapper om = new ObjectMapper();
+
+        try {
+            System.out.println(om.writeValueAsString(MyEnum3.ANOTHER_VALUE));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println(MyEnum3.ANOTHER_VALUE);
+    }
+}
+
+enum MyEnum3 {
+    @JsonProperty("theFirstValue") THE_FIRST_VALUE,
+    @JsonProperty("another_value") ANOTHER_VALUE;
+}
 

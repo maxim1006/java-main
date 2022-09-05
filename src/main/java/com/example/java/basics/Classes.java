@@ -1,6 +1,8 @@
 package com.example.java.basics;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -11,6 +13,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public class Classes {
     private final int num = 1;
@@ -261,17 +265,54 @@ class OuterNestedClass {
     }
 }
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+class BaseOfferingInfo {
+    private String id;
+    private String name;
+    private String description;
+}
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class PortalPage<T extends BaseOfferingInfo> {
+    String templateName;
+    T data;
+}
+
+
 @Slf4j
 class OOP {
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    private static class JSONObj {
+        String name = "Max";
+        int age = 34;
+    }
+
     public static void main(String[] args) {
         try {
+            ObjectMapper mapper = new ObjectMapper();
+            JSONObj jSONObj = new JSONObj();
+
             Encapsulation e = new Encapsulation(-1);
             ExtendedPerson extendedPerson = new ExtendedPerson("Max");
             String extendedPersonJson = new ObjectMapper().writeValueAsString(extendedPerson);
+            Map<String, Object> convertedPortalPage = mapper.convertValue(new PortalPage(), new TypeReference<>() {
+            });
+
+
             String extendedPersonJson1 = new Gson().toJson(extendedPerson);
 
             System.out.printf("%d", e.age);
             System.out.println(extendedPersonJson); // а тут ничего))
+            System.out.println("BaseOfferingInfo " + mapper.writeValueAsString(new BaseOfferingInfo())); // {"id":null,"name":null,"description":null}
+            System.out.println("convertedPortalPage " + mapper.writeValueAsString(convertedPortalPage)); //  {"templateName":null,"data":null}
+            System.out.println("mapper " + mapper.writeValueAsString(mapper.convertValue(jSONObj, Map.class))); // {"name":"Max","age":34}
             System.out.println(new Gson().toJson(extendedPerson)); // {"name":"Max","age":30}
             System.out.println(extendedPerson.age + " " + extendedPerson.getAge()); // 30 34
 
@@ -287,6 +328,14 @@ class OOP {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    public <T> T convertStringToObject(ObjectMapper mapper, String json, Class<T> clazz) throws JsonProcessingException {
+        return mapper.readValue(json, clazz);
+    }
+
+    public <T> List<T> convertJavaListFromJsonArray(ObjectMapper mapper, String json, TypeReference<List<T>> typeReference) throws JsonProcessingException {
+        return mapper.readValue(json, typeReference);
     }
 
     private static class Encapsulation {

@@ -3,6 +3,8 @@ package com.example.java.basics;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -65,7 +67,7 @@ class ListsAndArrays {
         List<String> list = List.of("Max", "Aliya", "Lili", "Alice");
         List<String> arraysAsList = Arrays.asList("Max", "Aliya", "Lili", "Alice");
         // расширяемая - смогу сделать add
-        List<String> arrayList = new ArrayList<String>();
+        List<String> arrayList = new ArrayList<String>(); // использую его
         List<String> linkedList = new LinkedList<String>();
 
         arrayList.add("Max");
@@ -122,6 +124,21 @@ class ListsAndArrays {
 
         // сделать из 1го айтема лист
         List<String> singletonList = Collections.singletonList("Max");
+
+        List<String> streamedList = new ArrayList<>();
+
+        streamedList.add("Max");
+
+        // пример как найти первый и посмотреть что он есть
+        streamedList.stream().findFirst().ifPresent(value -> {
+            if (value != null) {
+                System.out.println(value);
+            }
+        });
+
+
+        System.out.println(CollectionUtils.isEmpty(new ArrayList<String>())); // true
+        System.out.println(CollectionUtils.isNotEmpty(arrayList)); // true
     }
 }
 
@@ -325,6 +342,11 @@ class Strings {
         strBuilderReplace.append("c");
         System.out.println(strBuilderReplace.toString()); // a на след строке b на след строке с
         System.out.println(strBuilderReplace.toString().replace("\n", "")); // abс
+
+        String strCompare1 = "Hello";
+        String strCompare2 = "Hello";
+        System.out.println(Objects.equals(strCompare1, strCompare2)); // true
+        System.out.println(strCompare1 == strCompare2);  // true
     }
 }
 
@@ -372,10 +394,14 @@ class Cases {
     public static void main(String[] args) {
         HashMap<String, String> map = new HashMap<>();
 
+        System.out.println(MapUtils.isEmpty(map)); // true
+
         map.put("camelCase", "camelCase");
         map.put("PascalCase", "PascalCase");
         map.put("kebab-case", "kebab-case");
         map.put("snake_case", "snake_case");
+
+        System.out.println(MapUtils.isNotEmpty(map)); // true
 
         Set<String> keys = map.keySet();
         ArrayList<String> values = new ArrayList<>(map.values());
