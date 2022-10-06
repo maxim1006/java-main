@@ -9,6 +9,7 @@ import org.apache.commons.collections.MapUtils;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.time.Instant;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -678,5 +679,12 @@ class Await {
                 Thread.currentThread().interrupt();
             }
         }
+    }
+}
+
+class DateTest {
+    public static void main(String[] args) {
+        // Gets the number of seconds from the Java epoch of 1970-01-01T00:00:00Z.
+        System.out.println(Instant.now().getEpochSecond());
     }
 }

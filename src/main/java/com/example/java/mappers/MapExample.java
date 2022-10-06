@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.collections.MapUtils;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -43,9 +44,18 @@ class MapExampleInner {
     }
 
     MapExampleInner() {
+        Map<String, String> testMap = new HashMap<>();
+        Map<String, String> testMap1 = new HashMap<>();
+
         MapExampleInner.map.put("testName", AddressUnit::setCity);
         MapExampleInner.map.put("testName1", AddressUnit::setPostalCode);
         MapExampleInner.map.put("testName2", AddressUnit::setStreet);
+
+        System.out.println(MapUtils.isEmpty(map)); // false
+        System.out.println(MapUtils.isEmpty(testMap)); // true
+
+        testMap1.put("key", "value");
+        testMap.putAll(testMap1);
 
         System.out.println(new Gson().toJson(map)); // {"testName1":{},"testName2":{},"testName":{}}
 
