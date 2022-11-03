@@ -50,6 +50,7 @@ class MapExampleInner {
         MapExampleInner.map.put("testName", AddressUnit::setCity);
         MapExampleInner.map.put("testName1", AddressUnit::setPostalCode);
         MapExampleInner.map.put("testName2", AddressUnit::setStreet);
+        MapExampleInner.map.put("testName3", null);
 
         System.out.println(MapUtils.isEmpty(map)); // false
         System.out.println(MapUtils.isEmpty(testMap)); // true

@@ -52,3 +52,8 @@ Object and String - null
 https://fasterxml.github.io/jackson-annotations/javadoc/2.9/com/fasterxml/jackson/annotation/JsonInclude.html
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class QualificationPriceViewModel {
+
+### Async
+там где есть асинхронщина нужно использовать
+private final Map<String, String> t = new ConcurrentHashMap<>(); вместо Map<String, T> entities = new HashMap<>();
+AtomicBoolean reloaded = new AtomicBoolean(false); вместо boolean

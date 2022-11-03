@@ -15,6 +15,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apache.commons.lang3.StringUtils;
+
+// удобный класс для хранения констант
+import static com.example.java.constants.LocalizationConstants.CONSTANT_FROM_LOCALIZATION;
+
 
 public class Basics {
     public static void main(String[] args) {
@@ -171,6 +176,20 @@ class Regexps {
         // regexps
         Pattern pattern = Pattern.compile("(.*?) ([A-Z][a-z]*), ([\\d]*?),\\s(.*)");
         Matcher matcher = pattern.matcher("Ivanov Pavel, 25, Moscow");
+        int matcherGroupCount = matcher.groupCount();
+
+        System.out.println("matcher find: " + matcher.find());
+        System.out.println("matcherGroupCount: " + matcherGroupCount);
+
+        for (int i = 1; i <= matcherGroupCount; i++) {
+            String group = matcher.group(i);
+
+            int startIndex = matcher.start(group);
+            int endIndex = matcher.end(group);
+
+            System.out.println("group: " + group);
+        }
+
         if (matcher.matches()) {
             System.out.println("First name: " + matcher.group(1));
             System.out.println("Last name: " + matcher.group(2));
@@ -347,6 +366,7 @@ class Strings {
         String strCompare1 = "Hello";
         String strCompare2 = "Hello";
         System.out.println(Objects.equals(strCompare1, strCompare2)); // true
+        System.out.println(StringUtils.equals(strCompare1, strCompare2)); // true
         System.out.println(strCompare1 == strCompare2);  // true
     }
 }
@@ -410,6 +430,17 @@ class Cases {
         for (Map.Entry entry : map.entrySet()) {
             System.out.println(entry);
         }
+
+        // так итерируюсь по мапе
+        String value = map
+                .entrySet()
+                .stream()
+                .filter(i -> Objects.equals(i.getKey(), "camelCase"))
+                .findFirst()
+                .map(Map.Entry::getValue)
+                .orElse(null);
+
+        System.out.println(value); // camelCase
 
         //  так могу создать простую мапу
         Map.of(
@@ -652,7 +683,8 @@ class Switch {
                 break;
             }
 
-            default: {}
+            default: {
+            }
         }
     }
 }
@@ -686,5 +718,12 @@ class DateTest {
     public static void main(String[] args) {
         // Gets the number of seconds from the Java epoch of 1970-01-01T00:00:00Z.
         System.out.println(Instant.now().getEpochSecond());
+    }
+}
+
+class ImportTest {
+    public static void main(String[] args) {
+        // забираю из удобного класса для хранения констант
+        System.out.println(CONSTANT_FROM_LOCALIZATION);
     }
 }

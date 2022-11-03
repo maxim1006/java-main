@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections.map.HashedMap;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Any;
@@ -27,6 +28,32 @@ public class StreamExamples {
     }
 
     static void streamCreation() {
+        Map<String, Integer> mapTest = new HashMap<>();
+        mapTest.put("Alice", 3);
+        mapTest.put("Lili", 7);
+
+        Set<Map.Entry<String, Integer>> newMapTest = mapTest.entrySet();
+
+        System.out.println(newMapTest); // [Alice=3, Lili=7]
+
+        Map<Integer, String> newMapTestResult = newMapTest.stream()
+                .map(i -> Map.of(i.getValue(), i.getKey()))
+                .collect(Collectors.toMap(i -> Integer.parseInt(i.keySet().toArray()[0].toString()), i -> i.values().toArray()[0].toString())); // {3=Alice, 7=Lili}
+
+         Map<Integer, String> newMapTestResult1 = newMapTest.stream()
+                 // AbstractMap.SimpleEntry только для 1 пары ключ значение
+                .map(i -> new AbstractMap.SimpleEntry<>(i.getValue(), i.getKey()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        Map<Integer, String> newMapTestResult2 = newMapTest.stream()
+                .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+
+        System.out.println(newMapTestResult); // {3=Alice, 7=Lili}
+        System.out.println(newMapTestResult1); // {3=Alice, 7=Lili}
+        System.out.println(newMapTestResult2); // {3=Alice, 7=Lili}
+
+
+
         List<String> strings = List.of("1", "2", "3");
         Stream<String> stream = strings.stream();
 
@@ -60,28 +87,16 @@ public class StreamExamples {
 
         Random random = new Random();
         Stream<Integer> stream5 = Stream.generate(random::nextInt);
+        Integer stream5Integer = stream5.findFirst().orElse(null);
+        System.out.println("stream5 " + stream5Integer);
 
 //        random.*
 
 //        Function<String, String> concat = (s) -> s;
 //        System.out.println(concat);
-//        DoubleFunction<String> valuOf = String::valueOf;
+//        DoubleFunction<String> valueOf = String::valueOf;
 //        System.out.println(valuOf);
 
-    }
-
-
-    @Inject
-    @Any
-    Instance<AbstractService> abstractService;
-
-    public Map<String, AbstractService> viewModelFactoriesMap;
-
-    @PostConstruct
-    public void createFactories() {
-        viewModelFactoriesMap = abstractService
-                .stream()
-                .collect(Collectors.toMap(AbstractService::getType, Function.identity()));
     }
 
     private static void intermediateOperations() {
@@ -210,4 +225,20 @@ class MultipleFilters {
 }
 
 
-//
+// пример
+class Test {
+    @Inject
+    @Any
+    Instance<AbstractService> abstractService;
+
+    public Map<String, AbstractService> viewModelFactoriesMap;
+
+    @PostConstruct
+    public void createFactories() {
+        viewModelFactoriesMap = abstractService
+                .stream()
+                .collect(Collectors.toMap(AbstractService::getType, Function.identity()));
+
+        System.out.println(viewModelFactoriesMap);
+    }
+}
