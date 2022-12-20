@@ -60,11 +60,12 @@ class Test {
         System.out.println(Optional.ofNullable(getInstance()).map(Content::getText).orElse(null));
         System.out.println(Optional.ofNullable(getInstance()).map(Content::getText).orElse(null));
         System.out.println(Optional.ofNullable(getInstance()).map(Content::getText).orElse(null));
-        System.out.println(Optional.ofNullable(getInstances())
+
+        List<Content> list = Optional.ofNullable(getInstances())
                 .stream()
                 .flatMap(Collection::stream)
-                .map(i -> i)
-                .toList()
-        );
+                .collect(Collectors.toList());
+
+        System.out.println(list);
     }
 }
