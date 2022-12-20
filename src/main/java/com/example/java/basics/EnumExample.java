@@ -13,22 +13,42 @@ enum MyEnum {
     CONST, CONST1, CONST2;
 }
 
+@RequiredArgsConstructor
 enum MyEnum1 {
     Prop("123", null),
     Prop1("454", null),
     Prop2("45654", null),
     Prop3("Name", "Value");
 
-    MyEnum1(String name, String value) {
-        this.name = name;
-        this.value = value;
-    }
+    // когда @RequiredArgsConstructor могу не писать конструктор
+//    MyEnum1(String name, String value) {
+//        this.name = name;
+//        this.value = value;
+//    }
 
     private final String name;
     private final String value;
 
     public String getName() {return name;}
     public String getValue() {return value;}
+
+    // могу перезаписать метод для возврата значения при toString
+//    @Override
+//    public String toString() {
+//        return value;
+//    }
+}
+
+@RequiredArgsConstructor
+enum MyEnum2 {
+    Prop("1", "one"),
+    Prop1("4", "four");
+
+    @Getter
+    private final String code;
+
+    @Getter
+    private final String message;
 }
 
 public class EnumExample {
@@ -38,6 +58,8 @@ public class EnumExample {
         System.out.println(MyEnum1.Prop3.getName()); // "Name"
         System.out.println(MyEnum1.Prop3.getValue()); // "Value"
         System.out.println(MyEnum1.Prop.getName()); // 123
+        System.out.println(MyEnum1.Prop); // Prop
+        System.out.println(MyEnum1.Prop.toString()); // Prop
         System.out.println(EnumEtalon.ALL); // all
         // так привожу к строке (если например понадобиться в switch)
         System.out.println(EnumEtalon.valueOf("ALL")); // all
@@ -68,6 +90,12 @@ class EnumExample1 {
         if (CheckoutStepName.DETAILS.equals(testStrEnum)) {
             System.out.println(false);
         }
+    }
+}
+
+class EnumExample2 {
+    public static void main(String[] args) {
+        System.out.println(MyEnum2.Prop.getCode() + ' ' + MyEnum2.Prop.getMessage()); // 1 one
     }
 }
 
@@ -128,15 +156,16 @@ enum CheckoutStepTask {
 
 class EnumExample3 {
     public static void main(String[] args) {
-        ObjectMapper om = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         try {
-            System.out.println(om.writeValueAsString(MyEnum3.ANOTHER_VALUE));
+            // прикольно тут именно значение приплывет
+            System.out.println(objectMapper.writeValueAsString(MyEnum3.ANOTHER_VALUE)); // "another_value"
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        System.out.println(MyEnum3.ANOTHER_VALUE);
+        System.out.println(MyEnum3.ANOTHER_VALUE); //ANOTHER_VALUE
     }
 }
 

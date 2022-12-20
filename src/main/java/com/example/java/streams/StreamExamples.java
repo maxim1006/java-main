@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Any;
@@ -53,6 +54,44 @@ public class StreamExamples {
         System.out.println(newMapTestResult2); // {3=Alice, 7=Lili}
 
 
+        // Collectors.toMap
+        List<String> toMapList = List.of("Max", "Aliya");
+        Map<String, String> toMapListMap = new HashMap<>() {
+            {
+                put("Max", "husband");
+                put("Aliya", "wife");
+            }
+        };
+
+        Map<String, String> toMapMap = toMapList
+                .stream()
+                .collect(
+                        Collectors.toMap(
+                                e -> e,
+                                toMapListMap::get
+                        )
+                );
+
+        System.out.println("toMapMap " + toMapMap);
+
+
+        // nonMatch / anyMatch
+        Stream<String> streamNonMatch
+                = Stream.of("CSE", "C++", "Java", "DS");
+
+        Stream<String> streamNonMatch1 = Stream.of("CSE", "C++", "Java", "DS");
+        Stream<String> streamNonMatch2 = Stream.of("CSE", "C++", "Java", "DS");
+
+        boolean nonMatch = streamNonMatch.noneMatch(i -> i.length() > 3);
+        System.out.println("nonMatch " + nonMatch); // false
+
+        boolean anyMatch = streamNonMatch1.anyMatch(i -> i.length() > 3);
+        boolean anyMatchReg = streamNonMatch2.anyMatch("CS"::matches);
+        System.out.println("anyMatch " + anyMatch); // true
+        System.out.println("anyMatchReg " + anyMatchReg); // false
+        System.out.println("matches " + "/api/tech/some".matches("/api/tech*")); // true
+
+
 
         List<String> strings = List.of("1", "2", "3");
         Stream<String> stream = strings.stream();
@@ -81,6 +120,11 @@ public class StreamExamples {
                 .peek((item) -> System.out.println("[3]" + item))
                 /*.count()*/;
         System.out.println("Stream3 end");
+
+        // пример как найти что-то в листе и вернуть если есть
+        List<String> ALLOWED_DOMAINS = List.of("domain1", "google.com");
+        String prefix = "google";
+        System.out.println("is ALLOWED_DOMAINS " + ALLOWED_DOMAINS.stream().anyMatch(i -> StringUtils.startsWith(i, prefix)));
 
 
         Stream<Object> stream4 = Stream.generate(() -> 2);
@@ -224,6 +268,11 @@ class MultipleFilters {
     }
 }
 
+class TesStreamExample {
+    public static void main(String[] args) {
+    }
+}
+
 
 // пример
 class Test {
@@ -239,6 +288,6 @@ class Test {
                 .stream()
                 .collect(Collectors.toMap(AbstractService::getType, Function.identity()));
 
-        System.out.println(viewModelFactoriesMap);
+        System.out.println("viewModelFactoriesMap " + viewModelFactoriesMap);
     }
 }

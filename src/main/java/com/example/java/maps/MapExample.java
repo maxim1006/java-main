@@ -1,4 +1,4 @@
-package com.example.java.mappers;
+package com.example.java.maps;
 
 import com.example.properties.PortalProperties;
 import com.google.gson.Gson;
@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-// итак есть какой-то интерфейс
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

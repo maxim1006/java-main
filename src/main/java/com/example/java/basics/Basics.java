@@ -18,6 +18,8 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 
 // удобный класс для хранения констант
+import javax.ws.rs.core.HttpHeaders;
+
 import static com.example.java.constants.LocalizationConstants.CONSTANT_FROM_LOCALIZATION;
 
 
@@ -75,6 +77,9 @@ class ListsAndArrays {
         // расширяемая - смогу сделать add
         List<String> arrayList = new ArrayList<String>(); // использую его
         List<String> linkedList = new LinkedList<String>();
+
+        // empty Lists
+        System.out.println("empty " + Collections.emptyList()); // []
 
         arrayList.add("Max");
         arrayList.add("Aliya");
@@ -142,6 +147,10 @@ class ListsAndArrays {
             }
         });
 
+        // проверить есть ли в листе строке
+//        System.out.println(list.stream().filter(i -> i.startsWith("Ma")).findFirst().orElse(null) != null);
+//        System.out.println(list.stream().filter(i -> i.contains("Ma")).findFirst().orElse(null) != null);
+//        System.out.println(list.stream().filter(i -> i.endsWith("Ma")).findFirst().orElse(null) != null);
 
         System.out.println(CollectionUtils.isEmpty(new ArrayList<String>())); // true
         System.out.println(CollectionUtils.isNotEmpty(arrayList)); // true
@@ -367,6 +376,7 @@ class Strings {
         String strCompare2 = "Hello";
         System.out.println(Objects.equals(strCompare1, strCompare2)); // true
         System.out.println(StringUtils.equals(strCompare1, strCompare2)); // true
+        System.out.println(strCompare1.equals(strCompare2)); // true
         System.out.println(strCompare1 == strCompare2);  // true
     }
 }
@@ -725,5 +735,11 @@ class ImportTest {
     public static void main(String[] args) {
         // забираю из удобного класса для хранения констант
         System.out.println(CONSTANT_FROM_LOCALIZATION);
+    }
+}
+
+class UUIDTest {
+    public static void main(String[] args) {
+        System.out.println(UUID.randomUUID().toString());
     }
 }

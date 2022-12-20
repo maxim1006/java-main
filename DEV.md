@@ -55,5 +55,5 @@ public class QualificationPriceViewModel {
 
 ### Async
 там где есть асинхронщина нужно использовать
-private final Map<String, String> t = new ConcurrentHashMap<>(); вместо Map<String, T> entities = new HashMap<>();
+private final Map<String, String> t = new ConcurrentHashMap<>(); вместо Map<String, String> entities = new HashMap<>();
 AtomicBoolean reloaded = new AtomicBoolean(false); вместо boolean

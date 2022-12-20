@@ -5,7 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class OptionalTest {
     @Data
@@ -46,9 +49,22 @@ class Test {
         return content;
     }
 
+    public static List<Content> getInstances() {
+        boolean rand = Math.random() > 0.5;
+        List<Content> contents = rand ? List.of(new Content("content")) : null;
+        System.out.println(contents + " " + rand);
+        return contents;
+    }
+
     public static void main(String[] args) {
         System.out.println(Optional.ofNullable(getInstance()).map(Content::getText).orElse(null));
         System.out.println(Optional.ofNullable(getInstance()).map(Content::getText).orElse(null));
         System.out.println(Optional.ofNullable(getInstance()).map(Content::getText).orElse(null));
+        System.out.println(Optional.ofNullable(getInstances())
+                .stream()
+                .flatMap(Collection::stream)
+                .map(i -> i)
+                .toList()
+        );
     }
 }
