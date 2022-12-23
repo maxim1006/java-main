@@ -55,6 +55,8 @@ public class EnumExample {
     public static void main(String[] args) {
         System.out.println(MyEnum.CONST.toString()); // CONST
         System.out.println(MyEnum.CONST); // CONST
+        System.out.println(MyEnum.CONST.equals("CONST")); // false
+        System.out.println(MyEnum.CONST.equals(MyEnum.CONST)); // true
         System.out.println(MyEnum1.Prop3.getName()); // "Name"
         System.out.println(MyEnum1.Prop3.getValue()); // "Value"
         System.out.println(MyEnum1.Prop.getName()); // 123
