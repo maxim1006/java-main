@@ -1,11 +1,11 @@
 package com.example.java.streams;
 
+import com.example.java.enums.AbstractServiceViewModel;
 import com.example.service.AbstractService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -25,7 +25,7 @@ import static java.util.Comparator.comparingInt;
 public class StreamExamples {
     public static void main(String[] args) {
         streamCreation();
-        intermediateOperations();
+//        intermediateOperations();
     }
 
     static void streamCreation() {
@@ -140,6 +140,14 @@ public class StreamExamples {
 //        System.out.println(concat);
 //        DoubleFunction<String> valueOf = String::valueOf;
 //        System.out.println(valuOf);
+
+        // проверяю на distinct объекты, останется толлько 1 "Max", 35
+        AbstractMap.SimpleEntry<String, Integer> distinctMap = new AbstractMap.SimpleEntry<>("Max", 35);
+        AbstractMap.SimpleEntry<String, Integer> distinctMap1 = new AbstractMap.SimpleEntry<>("Max", 35);
+        AbstractMap.SimpleEntry<String, Integer> distinctMap2 = new AbstractMap.SimpleEntry<>("Max1", 35);
+        List<AbstractMap.SimpleEntry<String, Integer>> distinctList = List.of(distinctMap, distinctMap1, distinctMap2);
+
+        System.out.println(distinctList.stream().distinct().toList()); // [Max=35, Max1=35]
 
     }
 
@@ -275,12 +283,12 @@ class TesStreamExample {
 
 
 // пример
-class Test {
+class AbstractServiceTest {
     @Inject
     @Any
     Instance<AbstractService> abstractService;
 
-    public Map<String, AbstractService> viewModelFactoriesMap;
+    public Map<AbstractServiceViewModel, AbstractService> viewModelFactoriesMap;
 
     @PostConstruct
     public void createFactories() {
@@ -289,5 +297,6 @@ class Test {
                 .collect(Collectors.toMap(AbstractService::getType, Function.identity()));
 
         System.out.println("viewModelFactoriesMap " + viewModelFactoriesMap);
+        System.out.println("viewModelFactoriesMap " + viewModelFactoriesMap.get(AbstractServiceViewModel.DATA));
     }
 }

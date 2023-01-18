@@ -10,6 +10,7 @@ import org.apache.commons.collections.MapUtils;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -18,8 +19,8 @@ import java.util.function.BiConsumer;
 @AllArgsConstructor
 @NoArgsConstructor
 class AddressUnit {
-    private String city;
     private String street;
+    private String city;
     private String postalCode;
 }
 
@@ -51,18 +52,22 @@ class MapExampleInner {
         MapExampleInner.map.put("testName2", AddressUnit::setStreet);
         MapExampleInner.map.put("testName3", null);
 
-        System.out.println(MapUtils.isEmpty(map)); // false
-        System.out.println(MapUtils.isEmpty(testMap)); // true
+//        System.out.println(MapUtils.isEmpty(map)); // false
+//        System.out.println(MapUtils.isEmpty(testMap)); // true
 
         testMap1.put("key", "value");
         testMap.putAll(testMap1);
 
-        System.out.println(new Gson().toJson(map)); // {"testName1":{},"testName2":{},"testName":{}}
+//        System.out.println(new Gson().toJson(map)); // {"testName1":{},"testName2":{},"testName":{}}
+
+        // пример создания простой мапы
+//        AbstractMap.SimpleEntry<String, Integer> distinctMap = new AbstractMap.SimpleEntry<>("Max", 35);
 
         main();
     }
 
     public static void main() {
+        // вот так в сеттер могу что-то положить
         AddressUnit result = new AddressUnit();
         var setter = map.get("testName");
         setter.accept(result, "someValue");

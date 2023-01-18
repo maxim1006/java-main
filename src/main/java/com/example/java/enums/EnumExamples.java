@@ -1,6 +1,5 @@
-package com.example.java.basics;
+package com.example.java.enums;
 
-import com.example.java.enums.EnumEtalon;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
+import java.util.List;
 
 enum MyEnum {
     CONST, CONST1, CONST2;
@@ -51,7 +51,7 @@ enum MyEnum2 {
     private final String message;
 }
 
-public class EnumExample {
+public class EnumExamples {
     public static void main(String[] args) {
         System.out.println(MyEnum.CONST.toString()); // CONST
         System.out.println(MyEnum.CONST); // CONST
@@ -62,6 +62,21 @@ public class EnumExample {
         System.out.println(MyEnum1.Prop.getName()); // 123
         System.out.println(MyEnum1.Prop); // Prop
         System.out.println(MyEnum1.Prop.toString()); // Prop
+
+        List<MyEnum1> MyEnum1List = Arrays.stream(MyEnum1.values()).toList();
+
+        StringBuilder myEnum1Names = new StringBuilder("");
+        StringBuilder myEnum1Values = new StringBuilder("");
+
+        for (MyEnum1 item : MyEnum1List) {
+            myEnum1Names.append(item.getName()).append(" ");
+            myEnum1Values.append(item.getValue()).append(" ");
+        }
+
+        System.out.println(MyEnum1List); // [Prop, Prop1, Prop2, Prop3]
+        System.out.println(myEnum1Names); // 123 454 45654 Name
+        System.out.println(myEnum1Values); // null null null Value
+
         System.out.println(EnumEtalon.ALL); // all
         // так привожу к строке (если например понадобиться в switch)
         System.out.println(EnumEtalon.valueOf("ALL")); // all

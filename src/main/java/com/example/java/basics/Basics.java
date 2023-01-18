@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 // удобный класс для хранения констант
 import javax.ws.rs.core.HttpHeaders;
 
+import static com.example.java.constants.InterfaceConstants.CONSTANT_FROM_LOCALIZATION1;
 import static com.example.java.constants.LocalizationConstants.CONSTANT_FROM_LOCALIZATION;
 
 
@@ -71,10 +72,10 @@ class ListsAndArrays {
         List<Integer> intList2 = Stream.of("1", "2", "3").mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
 //        Stream.of("1", "2", "3").mapToInt(Integer::parseInt).forEach(System.out::println);
 
-        // фиксированная - не могу сделать add
+        // фиксированный массив - не могу сделать add
         List<String> list = List.of("Max", "Aliya", "Lili", "Alice");
         List<String> arraysAsList = Arrays.asList("Max", "Aliya", "Lili", "Alice");
-        // расширяемая - смогу сделать add
+        // расширяемый массив - смогу сделать add
         List<String> arrayList = new ArrayList<String>(); // использую его
         List<String> linkedList = new LinkedList<String>();
 
@@ -735,6 +736,8 @@ class ImportTest {
     public static void main(String[] args) {
         // забираю из удобного класса для хранения констант
         System.out.println(CONSTANT_FROM_LOCALIZATION);
+        // забираю из удобного интерфейса для хранения констант
+        System.out.println(CONSTANT_FROM_LOCALIZATION1);
     }
 }
 

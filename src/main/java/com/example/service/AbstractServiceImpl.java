@@ -1,5 +1,7 @@
 package com.example.service;
 
+import com.example.java.enums.AbstractServiceViewModel;
+
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
@@ -10,7 +12,7 @@ public class AbstractServiceImpl implements AbstractService {
     }
 
     @Override
-    public String getType() {
-        return "Str";
+    public AbstractServiceViewModel getType() {
+        return AbstractServiceViewModel.DEFAULT;
     }
 }
