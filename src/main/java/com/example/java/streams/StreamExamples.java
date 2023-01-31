@@ -283,16 +283,17 @@ class TesStreamExample {
 
 
 // пример
+// TODO сделать пример без @Any а с одним инстансом
 class AbstractServiceTest {
     @Inject
     @Any
-    Instance<AbstractService> abstractService;
+    Instance<AbstractService> abstractServices;
 
     public Map<AbstractServiceViewModel, AbstractService> viewModelFactoriesMap;
 
     @PostConstruct
     public void createFactories() {
-        viewModelFactoriesMap = abstractService
+        viewModelFactoriesMap = abstractServices
                 .stream()
                 .collect(Collectors.toMap(AbstractService::getType, Function.identity()));
 

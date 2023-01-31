@@ -16,9 +16,11 @@ public class ExtendsTest {
     public static void main(String[] args) {
         BaseTest testBase = new Test1();
         Test1 test1 = new Test1();
+        BaseTest test2Base = new Test2();
         Test2 test2 = new Test2();
 
         func(testBase);
+        func(test2Base);
         func(test1);
         func(test2);
     }

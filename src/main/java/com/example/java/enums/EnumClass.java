@@ -1,19 +1,30 @@
 package com.example.java.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 class EnumClass {
-    public static void main(String[] args) {
+    public static ObjectMapper objectMapper = new ObjectMapper();
+
+    public static void main(String[] args) throws JsonProcessingException {
 //        System.out.println(m()); // метода нельзя
         System.out.println(EnumClass.Day.FRIDAY); // FRIDAY // а enum можно)
 
         EnumClass.Day monday = EnumClass.Day.MONDAY;
 
         // каждый enum имеет статический метод values()
+        // а также каждый из айтемов values имеет name, и если дописать про value то будет еще и day.value
         EnumClass.Day[] days = EnumClass.Day.values();
 
         StringBuilder daysStr = new StringBuilder();
 
         for (EnumClass.Day day : days) {
             daysStr.append(day).append(" ");
+            System.out.println(objectMapper.writeValueAsString(day.name()));
+            System.out.println(objectMapper.writeValueAsString(day.value));
         }
 
         System.out.println(daysStr);
@@ -37,14 +48,19 @@ class EnumClass {
     public void m() {
     }
 
+    @AllArgsConstructor
     enum Day {
-        MONDAY,
-        TUESDAY,
-        WEDNESDAY,
-        THURSDAY,
-        FRIDAY,
-        SATURDAY,
-        SUNDAY
+        MONDAY(0),
+        TUESDAY(1),
+        WEDNESDAY(2),
+        THURSDAY(3),
+        FRIDAY(4),
+        SATURDAY(5),
+        SUNDAY(6);
+
+        @Getter
+        @JsonValue
+        private final Integer value;
     }
 
     enum DayStr {

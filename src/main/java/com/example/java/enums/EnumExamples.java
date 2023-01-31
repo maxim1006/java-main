@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 enum MyEnum {
     CONST, CONST1, CONST2;
@@ -26,11 +27,16 @@ enum MyEnum1 {
 //        this.value = value;
 //    }
 
-    private final String name;
-    private final String value;
 
-    public String getName() {return name;}
-    public String getValue() {return value;}
+    @Getter
+    private final String value;
+    @Getter
+    private final String name;
+
+//    private final String name;
+//    private final String value;
+//    public String getName() {return name;}
+//    public String getValue() {return value;}
 
     // могу перезаписать метод для возврата значения при toString
 //    @Override
@@ -92,6 +98,8 @@ class EnumExample1 {
 
         CheckoutStepTask test = CheckoutStepTask.parse("addToCart");
         CheckoutStepName test1 = CheckoutStepTask.getByCheckoutStep("updateDetails");
+        System.out.println(test.name()); // "addToCart"
+        System.out.println(test.getValue()); // "addToCart"
         System.out.println(test); // "addToCart"
         System.out.println(test1); // "details"
 
@@ -151,6 +159,19 @@ enum CheckoutStepTask {
     private final CheckoutStepName checkoutStep;
 
     public static CheckoutStepTask parse(String value) {
+        // тут удобно что могу в orElse вернуть даже строку изза findAny
+        String str = Arrays.stream(CheckoutStepTask.values())
+                .map(CheckoutStepTask::getValue)
+                .filter(typeValue -> typeValue.equals(value))
+                .findAny()
+                .orElse("");
+
+        // а в таком случае изза findFirst в orElse смогу вставить либо null либо CheckoutStepTask._значение_
+        CheckoutStepTask task = Arrays.stream(CheckoutStepTask.values()).filter(typeValue -> typeValue.equals(value)).findFirst().orElse(null);
+
+        // тоже но с Stream.of
+        CheckoutStepTask task1 = Stream.of(CheckoutStepTask.values()).filter(typeValue -> typeValue.equals(value)).findFirst().orElse(null);
+
         return Arrays.stream(CheckoutStepTask.values())
                 .filter(type -> type.getValue().equals(value))
                 .findFirst()
