@@ -3,11 +3,14 @@ package com.example.java.enums;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 enum MyEnum {
@@ -87,6 +90,8 @@ public class EnumExamples {
         // так привожу к строке (если например понадобиться в switch)
         System.out.println(EnumEtalon.valueOf("ALL")); // all
         System.out.println(EnumEtalon.valueOf("ALL") == EnumEtalon.ALL); // true
+
+        System.out.println(MyEnum4.map()); // {prop2=value2, prop1=value1, prop=value}
     }
 }
 
@@ -210,5 +215,27 @@ class EnumExample3 {
 enum MyEnum3 {
     @JsonProperty("theFirstValue") THE_FIRST_VALUE,
     @JsonProperty("another_value") ANOTHER_VALUE;
+}
+
+@AllArgsConstructor
+enum MyEnum4 {
+    Prop("prop", "value"),
+    Prop1("prop1", "value1"),
+    Prop2("prop2", "value2");
+
+    @Getter
+    private final String prop;
+
+    @Getter
+    private final String value;
+
+    public static Stream<MyEnum4> stream() {
+        return Stream.of(MyEnum4.values());
+    }
+
+    public static Map<String, String> map() {
+        return stream()
+                .collect(Collectors.toMap(MyEnum4::getProp, MyEnum4::getValue));
+    }
 }
 

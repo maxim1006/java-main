@@ -13,5 +13,5 @@ public class UriTest {
                 .build()
                 .toString();
     }
-    }
 }
+
