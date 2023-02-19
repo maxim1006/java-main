@@ -232,6 +232,7 @@ public class StreamExamples {
 
 class MultipleFilters {
     public static void main(String[] args) {
+        // этот лист можно расширять
         Collection<StreamExamples.Person> people = Arrays.asList(
                 new StreamExamples.Person("Max", 16, StreamExamples.Sex.MAN,
                         List.of(new StreamExamples.Person("aMax", 16, StreamExamples.Sex.MAN, List.of()))
@@ -264,6 +265,14 @@ class MultipleFilters {
         // если все же хочу новый массив
 //        .findFirst().orElse(new ArrayList<>());
 
+        // убираю null из массива
+        List<String> nullList = new ArrayList<>();
+        nullList.add("a");
+        nullList.add("b");
+        nullList.add(null);
+        nullList.add("c");
+        System.out.println(nullList.stream().filter(Objects::nonNull).collect(Collectors.toList()));
+
         System.out.println(personFromPeople);
 
         Map<String, String> mapEx = new HashMap<>();
@@ -272,6 +281,9 @@ class MultipleFilters {
         if (MapUtils.isNotEmpty(mapEx)) {
             System.out.println("really hi)");
         }
+
+        // Stream.concat examples
+        System.out.println(Stream.concat(List.of("1", "2").stream(), Stream.of("3")).toList());
 
     }
 }

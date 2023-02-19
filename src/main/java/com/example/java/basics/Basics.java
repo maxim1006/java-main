@@ -15,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import org.apache.commons.lang3.StringUtils;
 
 // удобный класс для хранения констант
@@ -69,12 +70,14 @@ class ListsAndArrays {
         List<Integer> intList = Arrays.asList(1, 2, 3);
         List<String> strList = Arrays.asList("1", "2", "3");
         int[] intList1 = Stream.of("1", "2", "3").mapToInt(Integer::parseInt).toArray();
-        List<Integer> intList2 = Stream.of("1", "2", "3").mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
+        // тоже что и 3 только с .toList(
+        List<Integer> intList2 = Stream.of("1", "2", "3").mapToInt(Integer::parseInt).boxed().toList();
+        List<Integer> intList3 = Stream.of("1", "2", "3").mapToInt(Integer::parseInt).boxed().collect(Collectors.toList());
 //        Stream.of("1", "2", "3").mapToInt(Integer::parseInt).forEach(System.out::println);
 
         // фиксированный массив - не могу сделать add
         List<String> list = List.of("Max", "Aliya", "Lili", "Alice");
-        List<String> arraysAsList = Arrays.asList("Max", "Aliya", "Lili", "Alice");
+        List<String> arraysAsList = Arrays.asList("Max", "Aliya", "Lili", "Alice"); // тут упадет если add сделать подсветки не будет от ide
         // расширяемый массив - смогу сделать add
         List<String> arrayList = new ArrayList<String>(); // использую его
         List<String> linkedList = new LinkedList<String>();
@@ -155,6 +158,18 @@ class ListsAndArrays {
 
         System.out.println(CollectionUtils.isEmpty(new ArrayList<String>())); // true
         System.out.println(CollectionUtils.isNotEmpty(arrayList)); // true
+
+        // stream List of lists
+        List<List<String>> listOfLists = new ArrayList<>();
+        listOfLists.add(List.of("Max", "Aliya"));
+        listOfLists.add(List.of("Lili", "Alice"));
+
+        List<String> listOfStrings = listOfLists.stream()
+                .flatMap(List::stream)
+                .map(i -> i)
+                .toList();
+
+        System.out.println(listOfStrings); // [Max, Aliya, Lili, Alice]
     }
 }
 

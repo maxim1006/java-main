@@ -120,6 +120,15 @@ class EnumExample1 {
         if (CheckoutStepName.DETAILS.equals(testStrEnum)) {
             System.out.println(false);
         }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            // Если проставлю @JsonValue в enum то значение будет "updateDetails" если нет то "UPDATE_DETAILS"
+            System.out.println(objectMapper.writeValueAsString(CheckoutStepTask.UPDATE_DETAILS));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
