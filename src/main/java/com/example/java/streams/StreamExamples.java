@@ -1,9 +1,12 @@
 package com.example.java.streams;
 
 import com.example.java.enums.AbstractServiceViewModel;
+import com.example.models.Team;
+import com.example.models.TeamMember;
 import com.example.service.AbstractService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,9 +22,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.example.java.basics.ObjectMapperExample.objectMapper;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.comparingInt;
 
+@Slf4j
 public class StreamExamples {
     public static void main(String[] args) {
         streamCreation();
@@ -41,8 +46,8 @@ public class StreamExamples {
                 .map(i -> Map.of(i.getValue(), i.getKey()))
                 .collect(Collectors.toMap(i -> Integer.parseInt(i.keySet().toArray()[0].toString()), i -> i.values().toArray()[0].toString())); // {3=Alice, 7=Lili}
 
-         Map<Integer, String> newMapTestResult1 = newMapTest.stream()
-                 // AbstractMap.SimpleEntry только для 1 пары ключ значение
+        Map<Integer, String> newMapTestResult1 = newMapTest.stream()
+                // AbstractMap.SimpleEntry только для 1 пары ключ значение
                 .map(i -> new AbstractMap.SimpleEntry<>(i.getValue(), i.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
@@ -92,7 +97,6 @@ public class StreamExamples {
         System.out.println("matches " + "/api/tech/some".matches("/api/tech*")); // true
 
 
-
         List<String> strings = List.of("1", "2", "3");
         Stream<String> stream = strings.stream();
 
@@ -118,7 +122,7 @@ public class StreamExamples {
 //                .limit(2)
                 .sorted(Comparator.reverseOrder())
                 .peek((item) -> System.out.println("[3]" + item))
-                /*.count()*/;
+        /*.count()*/;
         System.out.println("Stream3 end");
 
         // пример как найти что-то в листе и вернуть если есть
@@ -149,6 +153,30 @@ public class StreamExamples {
 
         System.out.println(distinctList.stream().distinct().toList()); // [Max=35, Max1=35]
 
+        // классный пример с toMap и Function.identity()
+        List<Team> teamList = List.of(new Team(
+                "1",
+                "my",
+                Collections.singletonList(
+                        new TeamMember(
+                                "mama1213",
+                                "Maxim Maximov",
+                                Arrays.asList("project1", "project2", "project3", "project4")
+                        )
+                )
+        ));
+
+
+        Map<String, com.example.models.Team> teamListModified = teamList.stream().map(i -> {
+            i.setName("My");
+            return i;
+        }).collect(Collectors.toMap(Team::getId, Function.identity()));
+
+        try {
+            System.out.println(objectMapper.writeValueAsString(teamListModified));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     private static void intermediateOperations() {
