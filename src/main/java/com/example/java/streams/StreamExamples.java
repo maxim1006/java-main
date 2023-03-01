@@ -1,6 +1,7 @@
 package com.example.java.streams;
 
 import com.example.java.enums.AbstractServiceViewModel;
+import com.example.models.StreamTest;
 import com.example.models.Team;
 import com.example.models.TeamMember;
 import com.example.service.AbstractService;
@@ -30,7 +31,7 @@ import static java.util.Comparator.comparingInt;
 public class StreamExamples {
     public static void main(String[] args) {
         streamCreation();
-//        intermediateOperations();
+        intermediateOperations();
     }
 
     static void streamCreation() {
@@ -96,7 +97,6 @@ public class StreamExamples {
         System.out.println("anyMatchReg " + anyMatchReg); // false
         System.out.println("matches " + "/api/tech/some".matches("/api/tech*")); // true
 
-
         List<String> strings = List.of("1", "2", "3");
         Stream<String> stream = strings.stream();
 
@@ -105,7 +105,9 @@ public class StreamExamples {
         String[] strings1 = {"a1", "a2", "a3"};
         Stream<String> stream2 = Arrays.stream(strings1).parallel();
 
+        // фильтрую по null
         String strFromMap = strings.stream()
+                .filter(Objects::nonNull)
                 .filter(i -> i.equals("1"))
                 .findFirst()
                 .orElse(null);
@@ -227,10 +229,24 @@ public class StreamExamples {
                 .collect(Collectors.toList());
         System.out.println(bySexAndAge);
 
+        StreamTest streamTest = StreamTest.builder().id("1").items(
+                List.of(StreamTest.builder().id("inner").items(
+                        List.of(StreamTest.builder().id("inner2").items(Collections.emptyList()).build())
+                ).build())).build();
+
+        List<StreamTest> streamTestList = streamTest
+                .getItems()
+                .stream()
+                .map(StreamTest::getItems)
+                .filter(Objects::nonNull)
+                .flatMap(Collection::stream)
+                .filter(i -> StringUtils.startsWith(i.getId(), "inner"))
+                .toList();
+
+        System.out.println(streamTestList);
     }
 
     static class MyPersonComparator implements Comparator<Person> {
-
         @Override
         public int compare(Person o1, Person o2) {
             return o1.getName().compareTo(o2.getName());
@@ -263,16 +279,16 @@ class MultipleFilters {
         // этот лист можно расширять
         Collection<StreamExamples.Person> people = Arrays.asList(
                 new StreamExamples.Person("Max", 16, StreamExamples.Sex.MAN,
-                        List.of(new StreamExamples.Person("aMax", 16, StreamExamples.Sex.MAN, List.of()))
+                        List.of(new StreamExamples.Person("aMax", 16, StreamExamples.Sex.MAN, Collections.emptyList()))
                 ),
                 new StreamExamples.Person("Aliya", 23, StreamExamples.Sex.MAN,
-                        List.of(new StreamExamples.Person("aAliya", 16, StreamExamples.Sex.MAN, List.of()))
+                        List.of(new StreamExamples.Person("aAliya", 16, StreamExamples.Sex.MAN, Collections.emptyList()))
                 ),
                 new StreamExamples.Person("Lili", 42, StreamExamples.Sex.WOMEN,
-                        List.of(new StreamExamples.Person("aLili", 16, StreamExamples.Sex.MAN, List.of()))
+                        List.of(new StreamExamples.Person("aLili", 16, StreamExamples.Sex.MAN, Collections.emptyList()))
                 ),
                 new StreamExamples.Person("Alice", 69, StreamExamples.Sex.MAN,
-                        List.of(new StreamExamples.Person("aAlice", 16, StreamExamples.Sex.MAN, List.of()))
+                        List.of(new StreamExamples.Person("aAlice", 16, StreamExamples.Sex.MAN, Collections.emptyList()))
                 )
         );
 
