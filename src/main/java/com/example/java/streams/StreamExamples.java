@@ -5,8 +5,8 @@ import com.example.models.StreamTest;
 import com.example.models.Team;
 import com.example.models.TeamMember;
 import com.example.service.AbstractService;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import io.quarkus.arc.All;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -17,6 +17,7 @@ import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
@@ -175,7 +176,7 @@ public class StreamExamples {
         }).collect(Collectors.toMap(Team::getId, Function.identity()));
 
         try {
-            System.out.println(objectMapper.writeValueAsString(teamListModified));
+            System.out.println("teamListModified: " + objectMapper.writeValueAsString(teamListModified));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -244,6 +245,23 @@ public class StreamExamples {
                 .toList();
 
         System.out.println(streamTestList);
+
+        Collection<Person1> prices = Arrays.asList(
+                new Person1("Max", new BigDecimal("12312123123"), Sex.MAN,
+                        List.of()
+                ),
+                new Person1("Max1", new BigDecimal("12312123123"), Sex.MAN,
+                        List.of()
+                )
+        );
+
+        // findAny возвращает Optional
+        Optional<BigDecimal> upfrontPrice = prices.stream()
+                .filter(price -> price.getName().equals("asd"))
+                .findAny()
+                .map(Person1::getAge);
+
+        System.out.println("upfrontPrice " + upfrontPrice);
     }
 
     static class MyPersonComparator implements Comparator<Person> {
@@ -260,6 +278,24 @@ public class StreamExamples {
     static class Person {
         private final String name;
         private final Integer age;
+        private final Sex sex;
+        private final List<Person> persons;
+
+        @Override
+        public String toString() {
+            return "Person{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    ", sex=" + sex +
+                    '}';
+        }
+    }
+
+    @Getter
+    @AllArgsConstructor
+    static class Person1 {
+        private final String name;
+        private final BigDecimal age;
         private final Sex sex;
         private final List<Person> persons;
 
@@ -329,6 +365,66 @@ class MultipleFilters {
         // Stream.concat examples
         System.out.println(Stream.concat(List.of("1", "2").stream(), Stream.of("3")).toList());
 
+    }
+}
+
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class EnrichableModel {
+    String id;
+    List<EnrichableModel> items;
+    String name;
+
+    public EnrichableModel(String id, List<EnrichableModel> items) {
+        this.id = id;
+        this.items = items;
+    }
+}
+
+class EnrichStream {
+    public static void main(String[] args) {
+        EnrichableModel m = EnrichableModel.builder().id("1").items(
+                List.of(EnrichableModel.builder().id("2").items(
+                        List.of(EnrichableModel.builder().id("3").items(Collections.emptyList()).build())
+                ).build())
+        ).build();
+
+        enrichMode(m);
+
+        System.out.println(m);
+
+        EnrichableModel m1 = new EnrichableModel("1",
+            List.of(new EnrichableModel("2",
+                    List.of(new EnrichableModel("3", List.of())))
+            )
+        );
+
+        m1.setName("Max");
+        enrichMode1(m1.items);
+
+        System.out.println(m1);
+    }
+
+    static void enrichMode(EnrichableModel m) {
+        if (CollectionUtils.isEmpty(m.items)) return;
+
+        m.setName("Max");
+
+        for (EnrichableModel i : m.items) {
+            i.setName("Max");
+            enrichMode(i);
+        }
+    }
+
+    static void enrichMode1(List<EnrichableModel> list) {
+        if (list == null) return;
+
+        for (EnrichableModel i : list) {
+            i.setName("Max");
+            enrichMode1(i.items);
+        }
     }
 }
 
