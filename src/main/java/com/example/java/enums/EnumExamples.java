@@ -90,6 +90,7 @@ public class EnumExamples {
         // так привожу к строке (если например понадобиться в switch)
         System.out.println(EnumEtalon.valueOf("ALL")); // all
         System.out.println(EnumEtalon.valueOf("ALL") == EnumEtalon.ALL); // true
+        System.out.println(Arrays.toString(EnumEtalon.values())); // [all, mandatory, none]
 
         System.out.println(MyEnum4.map()); // {prop2=value2, prop1=value1, prop=value}
     }
