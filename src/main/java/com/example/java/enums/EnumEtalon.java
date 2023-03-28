@@ -1,10 +1,11 @@
 package com.example.java.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public enum EnumEtalon {
     ALL("all"),
     MANDATORY("mandatory"),

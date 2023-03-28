@@ -1,7 +1,11 @@
 package com.example.java.basics;
 
+import com.example.java.enums.EnumEtalon;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -660,6 +664,22 @@ class TryCatchFinallyTest {
 }
 
 class Switch {
+    @AllArgsConstructor
+    private static enum SwitchEnum {
+        ALL("all"),
+        MANDATORY("mandatory"),
+        NONE("none");
+
+        @Getter
+        @JsonValue
+        private final String value;
+
+        @Override
+        public String toString() {
+            return value;
+        }
+    }
+
     public static void main(String[] args) {
         int switchValue = 3;
         char switchCharValue = 'A';
@@ -712,6 +732,16 @@ class Switch {
             default: {
             }
         }
+
+        System.out.println(getStr(SwitchEnum.ALL));
+    }
+
+    private static String getStr(SwitchEnum type) {
+        return switch (type) {
+            case ALL -> EnumEtalon.ALL.getValue();
+            case MANDATORY -> EnumEtalon.MANDATORY.getValue();
+            case NONE -> EnumEtalon.NONE.getValue();
+        };
     }
 }
 
