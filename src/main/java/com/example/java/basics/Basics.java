@@ -474,7 +474,8 @@ class Cases {
 
         //  так могу создать простую мапу
         Map.of(
-                "Key", "Value"
+                "Key", "Value",
+                "Key1", "Value1"
         );
     }
 }

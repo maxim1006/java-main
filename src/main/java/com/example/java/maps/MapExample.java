@@ -34,6 +34,7 @@ public class MapExample {
 @Slf4j
 @ApplicationScoped
 class MapExampleInner {
+
     @Inject
     PortalProperties portalProperties;
 
@@ -46,16 +47,24 @@ class MapExampleInner {
     public void init() {
         System.out.println(portalProperties);
     }
-
     MapExampleInner() {
         Map<String, String> testMap = new HashMap<>();
         Map<String, String> testMap1 = new HashMap<>();
         Map<String, Integer> testMapList = new HashMap<>();
 
+//        MapExampleInner.map.put("testName", (i, str) -> i.setCity(str));
         MapExampleInner.map.put("testName", AddressUnit::setCity);
         MapExampleInner.map.put("testName1", AddressUnit::setPostalCode);
         MapExampleInner.map.put("testName2", AddressUnit::setStreet);
         MapExampleInner.map.put("testName3", null);
+
+        System.out.println(MapExampleInner.map.keySet().size()); // 4
+
+        try {
+            System.out.println(objectMapper.writeValueAsString(MapExampleInner.map)); // System.out.println(objectMapper.writeValueAsString(MapExampleInner.map));
+        } catch (JsonProcessingException e) {
+            log.error("JsonProcessingException error", e);
+        }
 
 //        System.out.println(MapUtils.isEmpty(map)); // false
 //        System.out.println(MapUtils.isEmpty(testMap)); // true

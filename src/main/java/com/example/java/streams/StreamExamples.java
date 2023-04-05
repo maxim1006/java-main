@@ -170,7 +170,7 @@ public class StreamExamples {
         ));
 
 
-        Map<String, com.example.models.Team> teamListModified = teamList.stream().map(i -> {
+        Map<String, Team> teamListModified = teamList.stream().map(i -> {
             i.setName("My");
             return i;
         }).collect(Collectors.toMap(Team::getId, Function.identity()));
