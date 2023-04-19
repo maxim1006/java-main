@@ -461,9 +461,8 @@ class InterfaceClass {
         TestModel t1 = new TestClass1Ext();
 
         // чтобы вызвать доп метод которого нет в интерфейсе также как и в тс нужно явно указать что за класс
-        ((TestClass) t).method(); // method
-        // или
-        if (t instanceof TestClass) ((TestClass) t).method(); // method
+        if (t instanceof TestClass) ((TestClass) t).method(); // вот так правильно кастовать класс
+//        if (t instanceof TestModel1) ((TestModel1) t).testModel1Method(); // вот так правильно кастовать класс
 
         t.defaultMethod();
 

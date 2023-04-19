@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StreamTest {
+public class StreamTest2 {
     private String id;
-    private List<StreamTest1> items;
+    private List<StreamTest2> items;
 }
-

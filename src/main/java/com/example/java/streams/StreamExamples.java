@@ -1,9 +1,7 @@
 package com.example.java.streams;
 
 import com.example.java.enums.AbstractServiceViewModel;
-import com.example.models.StreamTest;
-import com.example.models.Team;
-import com.example.models.TeamMember;
+import com.example.models.*;
 import com.example.service.AbstractService;
 import io.quarkus.arc.All;
 import lombok.*;
@@ -231,14 +229,14 @@ public class StreamExamples {
         System.out.println(bySexAndAge);
 
         StreamTest streamTest = StreamTest.builder().id("1").items(
-                List.of(StreamTest.builder().id("inner").items(
-                        List.of(StreamTest.builder().id("inner2").items(Collections.emptyList()).build())
+                List.of(StreamTest1.builder().id("inner").items(
+                        List.of(StreamTest2.builder().id("inner2").items(Collections.emptyList()).build())
                 ).build())).build();
 
-        List<StreamTest> streamTestList = streamTest
+        List<StreamTest2> streamTestList = streamTest
                 .getItems()
                 .stream()
-                .map(StreamTest::getItems)
+                .map(i -> i.getItems())
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
                 .filter(i -> StringUtils.startsWith(i.getId(), "inner"))
