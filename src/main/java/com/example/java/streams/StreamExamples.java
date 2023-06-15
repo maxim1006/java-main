@@ -30,13 +30,18 @@ import static java.util.Comparator.comparingInt;
 public class StreamExamples {
     public static void main(String[] args) {
         streamCreation();
-        intermediateOperations();
+//        intermediateOperations();
     }
 
     static void streamCreation() {
         Map<String, Integer> mapTest = new HashMap<>();
         mapTest.put("Alice", 3);
         mapTest.put("Lili", 7);
+
+        List<Map<String, Integer>> list = new ArrayList<>();
+
+        list.add(mapTest);
+        list.add(mapTest);
 
         Set<Map.Entry<String, Integer>> newMapTest = mapTest.entrySet();
 
@@ -57,6 +62,10 @@ public class StreamExamples {
         System.out.println(newMapTestResult); // {3=Alice, 7=Lili}
         System.out.println(newMapTestResult1); // {3=Alice, 7=Lili}
         System.out.println(newMapTestResult2); // {3=Alice, 7=Lili}
+
+        System.out.println(new ArrayList<>(list.stream().flatMap(i -> i.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::sum)).entrySet()));
+
+        if (true) return;
 
 
         // Collectors.toMap

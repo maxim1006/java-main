@@ -38,6 +38,7 @@ factor(multiplier) * factor(multiplier) = product(multiplication)
 ### shortcuts
 cmd+option+l - reformat code
 ctrl+shift+r - launch main in class
+command + option + v - create var
 
 ### live templates
 sout - System.out.println()
