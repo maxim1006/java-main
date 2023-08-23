@@ -42,6 +42,7 @@ command + option + v - create var
 
 ### live templates
 sout - System.out.println()
+main + shift - main метод в классе
 
 ### access modifiers
 static, final, public, private, protected

@@ -3,7 +3,7 @@ package com.example.java.streams;
 import com.example.java.enums.AbstractServiceViewModel;
 import com.example.models.*;
 import com.example.service.AbstractService;
-import io.quarkus.arc.All;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -370,8 +370,16 @@ class MultipleFilters {
         }
 
         // Stream.concat examples
-        System.out.println(Stream.concat(List.of("1", "2").stream(), Stream.of("3")).toList());
+        System.out.println(Stream.concat(List.of("1", "2").stream(), Stream.of("3")).toList()); // [1, 2, 3]
 
+        // concat multiple
+        System.out.println(Stream.concat(
+                Stream.concat(
+                        List.of("1", "2").stream(),
+                        Stream.of("3")
+                ),
+                Stream.of("4")
+        ).collect(Collectors.toSet())); // [1, 2, 3, 4]
     }
 }
 
@@ -458,5 +466,66 @@ class AbstractServiceTest {
 
         System.out.println("viewModelFactoriesMap " + viewModelFactoriesMap);
         System.out.println("viewModelFactoriesMap " + viewModelFactoriesMap.get(AbstractServiceViewModel.DATA));
+    }
+}
+
+class FlatMapExample {
+    @Data
+    @Builder
+    @AllArgsConstructor
+    static class McFileEntityDescriptor {
+        @EqualsAndHashCode.Exclude
+        private final UUID id;
+        private final UUID uuid;
+        private final String variant;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class McPicture {
+        @JsonProperty("image")
+        private String imageUrl;
+        private Map<String, String> variants;
+    }
+
+    @Data
+    @Builder
+    static class Item {
+        private String name;
+    }
+
+    @Data
+    @Builder
+    static class ItemDescriptor {
+        private String variant;
+    }
+
+    public static void main(String[] args) {
+        List<McPicture> list = new ArrayList<>();
+
+        list.add(McPicture.builder().variants(
+                new HashMap<>() {{
+                    put("small", "/small");
+                    put("big", "/big");
+                }}
+        ).build());
+
+        Set<McFileEntityDescriptor> fileDescriptors = Stream.concat(
+                Stream.concat(
+                        list.stream()
+                                .filter(i -> MapUtils.isNotEmpty(i.getVariants()))
+                                .flatMap(i -> i.getVariants().keySet().stream().map(j -> FlatMapExample.mapPictureToFileEntityDescriptor(i, j))),
+                        list.stream().map(i -> FlatMapExample.mapPictureToFileEntityDescriptor(i, null))
+                ),
+                list.stream().map(i -> FlatMapExample.mapPictureToFileEntityDescriptor(i, null))
+        ).collect(Collectors.toSet());
+
+        System.out.println(fileDescriptors);
+    }
+
+    public static McFileEntityDescriptor mapPictureToFileEntityDescriptor(McPicture item, String j) {
+        return McFileEntityDescriptor.builder().variant(j).build();
     }
 }

@@ -1,15 +1,17 @@
 package com.example.java.basics;
 
 import com.example.java.enums.EnumEtalon;
+import com.example.utils.StubUtils;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
@@ -19,11 +21,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.apache.commons.lang3.StringUtils;
-
-// удобный класс для хранения констант
-import javax.ws.rs.core.HttpHeaders;
 
 import static com.example.java.constants.InterfaceConstants.CONSTANT_FROM_LOCALIZATION1;
 import static com.example.java.constants.LocalizationConstants.CONSTANT_FROM_LOCALIZATION;
@@ -391,7 +388,7 @@ class Strings {
         strBuilderReplace.append("c");
         System.out.println(strBuilderReplace.toString()); // a на след строке b на след строке с
         System.out.println(strBuilderReplace.toString().replace("\n", "")); // abс
-
+        System.out.println("c".concat("/"));;
         String strCompare1 = "Hello";
         String strCompare2 = "Hello";
         System.out.println(Objects.equals(strCompare1, strCompare2)); // true

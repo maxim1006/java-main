@@ -56,7 +56,8 @@ public class ObjectMapperExample {
          JsonNode jsonNode1 = objectMapper.convertValue(exampleJsonTreeObjectClassBase, JsonNode.class);
 
         // первый пример конвертации в JsonNode
-        System.out.println(getPrepaidPlanFromJsonNode(jsonNode));
+        ExampleDto exampleDto = getPrepaidPlanFromJsonNode(jsonNode);
+        System.out.println(exampleDto);
         // второй пример конвертации в JsonNode тут в логи выходит строка объекта от ломбок, поэтому остается order null
         System.out.println(getPrepaidPlanFromJsonNode(jsonNode1));
         // а тут уже конверчу в JSON и нет order null
