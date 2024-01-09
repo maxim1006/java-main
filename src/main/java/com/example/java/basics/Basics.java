@@ -1,11 +1,15 @@
 package com.example.java.basics;
 
 import com.example.java.enums.EnumEtalon;
+import com.example.models.TestModel;
 import com.example.utils.StubUtils;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -17,6 +21,7 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.Instant;
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -787,5 +792,48 @@ class ImportTest {
 class UUIDTest {
     public static void main(String[] args) {
         System.out.println(UUID.randomUUID().toString());
+    }
+}
+
+@Slf4j
+class BiConsumerExample {
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class BiConsumerExampleObj {
+        private String id;
+
+        static void doSmth(BiConsumerExampleObj arg1, String b) {}
+    }
+
+    public static ObjectMapper objectMapper = new ObjectMapper();
+
+    // тут map по сути это мапа из стринг - метод (BiConsumer как раз и есть этот метод) и вместо того чтобы писать if ()... в BiConsumer записываем ф-цию на каждый проп
+    // и потом вызываем эту функцию в контексте объекта BiConsumerExampleObj
+    public static void main(String[] args) {
+        Map<String, BiConsumer<BiConsumerExampleObj, String>> map = new HashMap<>();
+
+//        map.put("someProp", (i, j) -> i.setId(j));
+        map.put("someProp", BiConsumerExampleObj::setId);
+//        map.put("someProp", BiConsumerExampleObj::doSmth);
+
+        try {
+            System.out.println(objectMapper.writeValueAsString(map));
+        } catch (JsonProcessingException e) {
+            log.error("JsonProcessingException error", e);
+        }
+
+        BiConsumerExampleObj biConsumerExampleObj = new BiConsumerExampleObj();
+        biConsumerExampleObj.setId("123");
+
+        map.get("someProp").accept(biConsumerExampleObj, "prop");
+
+        try {
+            System.out.println(objectMapper.writeValueAsString(map));
+            System.out.println(objectMapper.writeValueAsString(biConsumerExampleObj));
+        } catch (JsonProcessingException e) {
+            log.error("JsonProcessingException error", e);
+        }
     }
 }

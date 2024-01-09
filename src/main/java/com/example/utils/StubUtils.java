@@ -1,20 +1,20 @@
 package com.example.utils;
 
+import com.example.java.basics.ObjectMapperExample;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 class StubUtilsExample {
     private String name;
 }
@@ -24,9 +24,12 @@ public class StubUtils {
     @Inject
     JsonMapper jsonMapper;
 
+    @Inject
+    ObjectMapperExample objectMapperExample;
+
     public static ObjectMapper objectMapper = new ObjectMapper();
 
-    public <T> T getStubByLocaleAndLink(Class<T> clazz, String link) {
+    public <T> T getStubLink(Class<T> clazz, String link) {
         InputStream input = getClass().getResourceAsStream(link);
 
         try {
@@ -35,11 +38,6 @@ public class StubUtils {
         } catch (IOException e) {
             return null;
         }
-
-        // так тоже могу получить файл
-//        File jsonFile = new File(link);
-//        try {
-//            JsonNode rootNode = objectMapper.readTree(jsonFile); // "/files/test.json"
     }
 
     public Object getStubTest() {
@@ -53,10 +51,6 @@ public class StubUtils {
             return null;
         }
 
-        // так тоже могу получить файл
-//        File jsonFile = new File(link);
-//        try {
-//            JsonNode rootNode = objectMapper.readTree(jsonFile); // "/files/test.json"
         return null;
     }
 }

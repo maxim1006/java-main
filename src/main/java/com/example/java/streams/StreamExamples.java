@@ -65,9 +65,6 @@ public class StreamExamples {
 
         System.out.println(new ArrayList<>(list.stream().flatMap(i -> i.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::sum)).entrySet()));
 
-        if (true) return;
-
-
         // Collectors.toMap
         List<String> toMapList = List.of("Max", "Aliya");
         Map<String, String> toMapListMap = new HashMap<>() {
