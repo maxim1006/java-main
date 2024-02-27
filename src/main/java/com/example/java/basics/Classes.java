@@ -117,8 +117,27 @@ class BuilderTestModel {
     String str2;
 }
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+class BuilderTest1Model {
+    String str = "Max";
+    String str1 = "Max1";
+    String str2;
+    Boolean changed;
+}
+
 class BuilderTest {
     public static void main(String[] args) {
+        System.out.println(false || false && true);
+
+        // вот так надо boolean хендлить если может быть null
+        BuilderTest1Model builderTest1Model = BuilderTest1Model.builder().build();
+        if (builderTest1Model.getChanged() != null && builderTest1Model.getChanged()) {
+            System.out.println("success");
+        }
+
         // {"str":"Hi mom"}
         System.out.println(new Gson().toJson(BuilderTestModel.builder().str("Hi mom").build()));
         // {"str":"Max","str1":"Max1"}

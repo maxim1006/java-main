@@ -837,3 +837,18 @@ class BiConsumerExample {
         }
     }
 }
+
+@Slf4j
+class Logs {
+    public static void main(String[] args) {
+        String name = "Max";
+        int age = 36;
+
+        System.out.printf("Name: %s  Age: %d \n", name, age);
+        System.out.println("Name Max" + "\n" + "Age 36");
+        // отработает только в кваркусе
+//        log.error("Error loading file content for {}", descriptor, e);
+        log.warn("Error loading file content for {}", "my warning");
+        log.info("Processing {}", 10);
+    }
+}

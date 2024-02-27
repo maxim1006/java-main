@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class OptionalTest {
@@ -49,6 +50,11 @@ class Test {
         return content;
     }
 
+    public static Content getInstanceWithText() {
+        boolean rand = Math.random() > 0.5;
+        return rand ? new Content("content") : new Content();
+    }
+
     public static List<Content> getInstances() {
         boolean rand = Math.random() > 0.5;
         List<Content> contents = rand ? List.of(new Content("content")) : null;
@@ -61,11 +67,30 @@ class Test {
         System.out.println(Optional.ofNullable(getInstance()).map(Content::getText).orElse(null));
         System.out.println(Optional.ofNullable(getInstance()).map(Content::getText).orElse(null));
 
+        Content instanceIfPresent = getInstance();
+        Content instanceIfPresentOrElse = getInstanceWithText();
+        String instanceIfPresentOrElseText = getInstanceWithText().getText();
+        Optional.ofNullable(instanceIfPresent).ifPresent(i -> i.setText("If Present"));
+        Optional.ofNullable(instanceIfPresentOrElseText).ifPresentOrElse(i -> instanceIfPresentOrElse.setText("If PresentOrElse"), () -> instanceIfPresentOrElse.setText("If PresentOrElse null"));
+
+        if (instanceIfPresent != null) {
+            System.out.println(instanceIfPresent.getText());
+        }
+
+        System.out.println(instanceIfPresentOrElse.getText());
+
         List<Content> list = Optional.ofNullable(getInstances())
                 .stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
+        Set<String> set = Optional.ofNullable(getInstances())
+                .stream()
+                .flatMap(Collection::stream)
+                .map(Content::getText)
+                .collect(Collectors.toSet());
+
         System.out.println(list);
+        System.out.println(set);
     }
 }

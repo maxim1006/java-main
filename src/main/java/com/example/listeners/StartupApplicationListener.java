@@ -2,6 +2,7 @@ package com.example.listeners;
 
 import com.example.utils.StubUtils;
 import io.quarkus.runtime.StartupEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+@Slf4j
 @ApplicationScoped
 public class StartupApplicationListener {
     @Inject

@@ -166,6 +166,7 @@ enum CheckoutStepTask {
     UPDATE_DELIVERY("updateDelivery", CheckoutStepName.DELIVERY),
     START_PAYMENT("startPayment", CheckoutStepName.PAYMENT);
 
+    // Если проставлю @JsonValue в enum то значение будет "updateDetails" если нет то "UPDATE_DETAILS"
     @Getter
     @JsonValue
     private final String value;

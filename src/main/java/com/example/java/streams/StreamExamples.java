@@ -117,6 +117,7 @@ public class StreamExamples {
                 .findFirst()
                 .orElse(null);
 
+        boolean hasOne = strings.contains("1");
 
         Stream<Integer> stream3 = Stream.iterate(1, integer -> integer + 1);
 
@@ -137,9 +138,20 @@ public class StreamExamples {
         String prefix = "google";
         System.out.println("is ALLOWED_DOMAINS " + ALLOWED_DOMAINS.stream().anyMatch(i -> StringUtils.startsWith(i, prefix)));
 
+        // так можно найти что-то в листе и если есть то тру
+//        boolean hasChar = object.getItems().stream()
+//                .map(i -> i.getСhars().get(portalProperties.chars().ids().allowedForPreOrder()))
+//                .anyMatch(Objects::nonNull);
+
+//        return object.getItems().stream()
+//                .map(i -> i.getMap().get(id))
+//                .filter(Objects::nonNull)
+//                .anyMatch(i -> i.getValue().equals(value));
+
 
         Stream<Object> stream4 = Stream.generate(() -> 2);
 
+        // пример получения рандомного числа new Random().nextInt(__число__)
         Random random = new Random();
         Stream<Integer> stream5 = Stream.generate(random::nextInt);
         Integer stream5Integer = stream5.findFirst().orElse(null);

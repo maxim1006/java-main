@@ -2,6 +2,7 @@ quarkus:
   http:
     port: 8080
 
+# для локальной postgresql
   datasource:
     db-kind: postgresql
     username: me
@@ -9,12 +10,20 @@ quarkus:
     jdbc:
       url: "jdbc:postgresql://127.0.0.1:5432/postgres"
 
-  hibernate-orm:
-    database:
-      generation: update
+  # для докер компоуз
+#  datasource:
+#    db-kind: postgresql
+#    username: postgres
+#    password: secret
+#    jdbc:
+#      url: "jdbc:postgresql://127.0.0.1:15432/postgres"
+#
+#  hibernate-orm:
+#    database:
+#      generation: update
 
-  mongodb:
-    connection-string: mongodb://localhost:27017
+#  mongodb:
+#    connection-string: mongodb://localhost:27017
 
 portal:
   default-locale: en-US
