@@ -1,6 +1,7 @@
 package com.example.java.extend;
 
-import javax.inject.Inject;
+
+import jakarta.inject.Inject;
 
 public class ModelExtend {
     @Inject

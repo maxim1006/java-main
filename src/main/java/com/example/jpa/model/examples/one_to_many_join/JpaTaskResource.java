@@ -1,9 +1,10 @@
 package com.example.jpa.model.examples.one_to_many_join;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/jpa/task")
 @Produces(MediaType.APPLICATION_JSON)

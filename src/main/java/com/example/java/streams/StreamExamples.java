@@ -4,16 +4,17 @@ import com.example.java.enums.AbstractServiceViewModel;
 import com.example.models.*;
 import com.example.service.AbstractService;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.inject.Inject;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Any;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
+import jakarta.annotation.PostConstruct;
+
+import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.Any;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.*;

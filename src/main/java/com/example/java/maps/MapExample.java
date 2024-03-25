@@ -4,16 +4,16 @@ import com.example.properties.PortalProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.MapUtils;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import java.util.*;
+import jakarta.enterprise.context.ApplicationScoped;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.BiConsumer;
 
 @Data

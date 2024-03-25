@@ -2,11 +2,11 @@ package com.example.jpa.rest;
 
 import com.example.jpa.model.TeamMember;
 import com.example.jpa.repository.TeamMemberRepository;
+import jakarta.inject.Inject;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 // Entity:
 // GET /<entity>s -> all entities

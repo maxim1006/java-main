@@ -2,7 +2,7 @@ package com.example.service;
 
 import com.example.java.enums.AbstractServiceViewModel;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class AbstractServiceImpl1 implements AbstractService {

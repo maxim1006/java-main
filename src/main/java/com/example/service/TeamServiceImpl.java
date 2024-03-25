@@ -2,9 +2,9 @@ package com.example.service;
 
 import com.example.models.Team;
 import com.example.models.TeamMember;
+import jakarta.inject.Named;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
