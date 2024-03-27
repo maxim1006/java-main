@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.jackson.ObjectMapperCustomizer;
 import jakarta.inject.Singleton;
 
+// будет вызван при старте app
 @Singleton
 public class PortalObjectMapperCustomizer implements ObjectMapperCustomizer {
 

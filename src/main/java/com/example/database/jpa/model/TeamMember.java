@@ -1,14 +1,13 @@
-package com.example.jpa.model.examples.one_to_many_join;
+package com.example.database.jpa.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import java.util.List;
 
 @Entity
@@ -16,16 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Project {
+public class TeamMember {
     @Id
     private String id;
 
     private String name;
 
-    @OneToMany(
-            mappedBy = "project",
-            cascade = CascadeType.ALL,
-            orphanRemoval = false
-    )
-    private List<Task> tasks;
+    @ElementCollection
+    private List<String> projects;
 }

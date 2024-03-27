@@ -1,4 +1,4 @@
-package com.example.jpa.model.examples.one_to_many_join;
+package com.example.database.jpa.model.examples.one_to_many_join;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

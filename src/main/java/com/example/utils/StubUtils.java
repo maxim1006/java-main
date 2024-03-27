@@ -46,7 +46,7 @@ public class StubUtils {
         try {
             String stub = new String(input.readAllBytes(), StandardCharsets.UTF_8);
             StubUtilsExample rootNode = jsonMapper.convertStringToObject(stub, StubUtilsExample.class); // "/files/test.json"
-            System.out.println(rootNode);
+            System.out.println("Stub file example " + jsonMapper.convertObjectToPrettyString(rootNode));
         } catch (IOException e) {
             return null;
         }

@@ -1,4 +1,4 @@
-package com.example.jpa.constants;
+package com.example.constants;
 
 public class UrlConstants {
     public static final String API = "/api";

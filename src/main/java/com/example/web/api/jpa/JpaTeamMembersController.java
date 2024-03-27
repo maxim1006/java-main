@@ -1,7 +1,8 @@
-package com.example.jpa.rest;
+package com.example.web.api.jpa;
 
-import com.example.jpa.model.TeamMember;
-import com.example.jpa.repository.TeamMemberRepository;
+import com.example.constants.UrlConstants;
+import com.example.database.jpa.model.TeamMember;
+import com.example.database.jpa.repository.TeamMemberRepository;
 import jakarta.inject.Inject;
 
 import jakarta.ws.rs.*;
@@ -17,14 +18,14 @@ import jakarta.ws.rs.core.Response;
 // PUT/PATCH /<entity>s/{id} -> update entity by id
 // DELETE /<entity>s/{id} -> delete by id
 
-@Path("/jpa/team-members")
+@Path(UrlConstants.API + "/jpa/team-members")
 @Produces(MediaType.APPLICATION_JSON)
-public class JpaTeamMembersResource {
+public class JpaTeamMembersController {
 
     private final TeamMemberRepository teamMemberRepository;
 
     @Inject
-    public JpaTeamMembersResource(TeamMemberRepository teamMemberRepository) {
+    public JpaTeamMembersController(TeamMemberRepository teamMemberRepository) {
         this.teamMemberRepository = teamMemberRepository;
     }
 

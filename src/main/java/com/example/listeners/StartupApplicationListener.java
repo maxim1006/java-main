@@ -1,6 +1,6 @@
 package com.example.listeners;
 
-import com.example.java.mappers.EtalonEnumMapperTest;
+import com.example.java.mappers.MapperTest;
 import com.example.utils.StubUtils;
 import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -17,14 +17,14 @@ public class StartupApplicationListener {
     StubUtils stubUtils;
 
     @Inject
-    EtalonEnumMapperTest etalonEnumMapperTest;
+    MapperTest mapperTest;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StartupApplicationListener.class);
 
     void onStart(@Observes StartupEvent ev) {
         log.info("Application started");
-        System.out.println("12312312333");
-        etalonEnumMapperTest.init();
+        System.out.println("Example of sout");
+        mapperTest.init();
 
         try {
             stubUtils.getStubTest();

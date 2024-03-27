@@ -1,6 +1,6 @@
-package com.example.jpa.rest;
+package com.example.web.api.jpa;
 
-import com.example.jpa.constants.UrlConstants;
+import com.example.constants.UrlConstants;
 import lombok.Builder;
 import lombok.Data;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
@@ -15,7 +15,7 @@ import java.util.List;
 @Path(UrlConstants.API + "/web-content")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class JpaTestResource {
+public class JpaTestController {
 
     @Data
     @Builder

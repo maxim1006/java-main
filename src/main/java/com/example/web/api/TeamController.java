@@ -1,4 +1,4 @@
-package com.example.rest;
+package com.example.web.api;
 
 import com.example.models.Team;
 import com.example.service.TeamService;
@@ -14,12 +14,12 @@ import jakarta.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/teams")
-public class TeamResource {
+public class TeamController {
 
     private final TeamService teamService;
 
     @Inject
-    public TeamResource(TeamService teamService) {
+    public TeamController(TeamService teamService) {
         this.teamService = teamService;
     }
 

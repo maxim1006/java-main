@@ -1,23 +1,19 @@
-package com.example.jpa.rest;
+package com.example.web.api.jpa;
 
-import com.example.jpa.model.Team;
-import com.example.jpa.repository.TeamRepository;
+import com.example.constants.UrlConstants;
+import com.example.database.jpa.model.Team;
+import com.example.database.jpa.repository.TeamRepository;
 import jakarta.inject.Inject;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/jpa/teams")
+@Path(UrlConstants.API + "/jpa/teams")
 @Produces(MediaType.APPLICATION_JSON)
-public class JpaTeamResource {
-
-    private final TeamRepository teamRepository;
-
+public class JpaTeamController {
     @Inject
-    public JpaTeamResource(TeamRepository teamRepository) {
-        this.teamRepository = teamRepository;
-    }
+    TeamRepository teamRepository;
 
     @GET
     @Path("/all")

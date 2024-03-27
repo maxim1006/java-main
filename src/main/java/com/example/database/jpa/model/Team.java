@@ -1,13 +1,11 @@
-package com.example.jpa.model;
+package com.example.database.jpa.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,12 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class TeamMember {
+public class Team {
     @Id
     private String id;
 
     private String name;
 
-    @ElementCollection
-    private List<String> projects;
+    @OneToMany(cascade = CascadeType.ALL/*, fetch = FetchType.EAGER*/)
+    private List<TeamMember> members;
 }
