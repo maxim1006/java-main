@@ -1,7 +1,7 @@
 package com.example.service;
 
-import com.example.models.Team;
-import com.example.models.TeamMember;
+import com.example.models.internal.Team;
+import com.example.models.internal.TeamMember;
 import jakarta.inject.Named;
 
 import jakarta.enterprise.context.ApplicationScoped;

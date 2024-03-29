@@ -195,8 +195,8 @@ class NumberPalindrome {
     public static boolean isPalindrome(int number) {
         int positiveNumber = Math.abs(number);
 
-        StringBuffer reversedNumber = new StringBuffer(positiveNumber + "").reverse();
-        return (positiveNumber + "").equals(reversedNumber.toString());
+        StringBuffer reversedNumber = new StringBuffer(String.valueOf(positiveNumber)).reverse();
+        return (String.valueOf(positiveNumber)).equals(reversedNumber.toString());
     }
 }
 
@@ -252,7 +252,7 @@ class SharedDigit {
         String str1 = Integer.toString(num1);
 
         for (int i = 0; i < str.length(); i++) {
-            if (str1.contains(str.charAt(i) + "")) {
+            if (str1.contains(String.valueOf(str.charAt(i)))) {
                 return true;
             }
         }
@@ -270,9 +270,9 @@ class LastDigitChecker {
         if (!LastDigitChecker.isValid(num) || !LastDigitChecker.isValid(num1) || !LastDigitChecker.isValid(num2))
             return false;
 
-        char numChar = Integer.toString(num).charAt((num + "").length() - 1);
-        char num1Char = Integer.toString(num1).charAt((num1 + "").length() - 1);
-        char num2Char = Integer.toString(num2).charAt((num2 + "").length() - 1);
+        char numChar = Integer.toString(num).charAt((String.valueOf(num)).length() - 1);
+        char num1Char = Integer.toString(num1).charAt((String.valueOf(num1)).length() - 1);
+        char num2Char = Integer.toString(num2).charAt((String.valueOf(num2)).length() - 1);
 
         if (numChar == num1Char || num1Char == num2Char || numChar == num2Char) return true;
 
@@ -390,11 +390,11 @@ class NumberToWords {
             return;
         }
 
-        String str = num + "";
+        String str = String.valueOf(num);
 
         for (int i = 0; i < str.length(); i++) {
             char currentChar = str.charAt(i);
-            int currentNum = Integer.parseInt(currentChar + "");
+            int currentNum = Integer.parseInt(String.valueOf(currentChar));
             System.out.println(dayList[currentNum]);
         }
     }

@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.Named;
 import org.mapstruct.ValueMapping;
 
+// пример enum с valueMapping + случай если передал null в from
 @Mapper
 public interface EtalonEnumMapper {
     @AllArgsConstructor

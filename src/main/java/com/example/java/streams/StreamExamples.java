@@ -1,7 +1,7 @@
 package com.example.java.streams;
 
 import com.example.java.enums.AbstractServiceViewModel;
-import com.example.models.*;
+import com.example.models.internal.*;
 import com.example.service.AbstractService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.inject.Inject;

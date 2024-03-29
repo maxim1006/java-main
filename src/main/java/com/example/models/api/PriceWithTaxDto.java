@@ -1,17 +1,18 @@
-package com.example.models;
+package com.example.models.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class StreamTest2 {
+@NoArgsConstructor
+public class PriceWithTaxDto {
     private String id;
-    private List<StreamTest2> items;
+    private BigDecimal value;
+    private BigDecimal tax;
 }
