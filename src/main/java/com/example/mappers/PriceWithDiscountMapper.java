@@ -13,7 +13,7 @@ import org.mapstruct.Mapping;
 
 import java.math.BigDecimal;
 
-// Пример со свойством из nested bean (внутреннего объекта) которое мапится на свойство DTO
+// Пример со свойством из nested bean (внутреннего объекта) discountInfo.name которое мапится на свойство DTO discountName
 @Mapper
 public interface PriceWithDiscountMapper {
 

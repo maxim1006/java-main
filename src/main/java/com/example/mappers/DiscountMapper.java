@@ -22,10 +22,11 @@ public interface DiscountMapper {
         }
     }
 
+    // TODO почему-то не работает - надо разобраться
     @AfterMapping
-    default void afterMap(DiscountInfo discountInfo) {
+    default void afterMap(DiscountInfo discountInfo, @MappingTarget DiscountInfoDto discountInfoDto) {
         if (StringUtils.isEmpty(discountInfo.getId())) {
-            discountInfo.setId(UUID.randomUUID().toString());
+            discountInfoDto.setId(UUID.randomUUID().toString());
         }
     }
 

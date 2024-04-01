@@ -29,6 +29,7 @@ public interface EtalonEnumMapper {
         }
     }
 
+    // если передал null в from то на выходе DEFAULT
     @ValueMapping(source = MappingConstants.NULL, target = "DEFAULT")
     EnumEtalonDto from(EnumEtalon enumEtalon);
 }
