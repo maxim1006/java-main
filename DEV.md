@@ -39,6 +39,14 @@ factor(multiplier) * factor(multiplier) = product(multiplication)
 cmd+option+l - reformat code
 ctrl+shift+r - launch main in class
 command + option + v - create var
+shift+fn+f6 - rename
+ctrl + j - info about var (если еще раз нажать то в отдельном окне окроется инфо)
+cmd+option+b - перейти к реализации метода
+cmd + [ - назад по истории
+cmd + ] - вперед по истории
+cmd + d - копировать строку
+cmd + shift + v - копировать из истории буфера копирования
+cmd + y - быстрый просмотр
 
 ### live templates
 sout - System.out.println()

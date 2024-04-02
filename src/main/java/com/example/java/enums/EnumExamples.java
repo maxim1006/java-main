@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -50,14 +52,31 @@ enum MyEnum1 {
 
 @RequiredArgsConstructor
 enum MyEnum2 {
-    Prop("1", "one"),
-    Prop1("4", "four");
+    PROP("1", "one"),
+    PROP_1("4", "four"),
+
+    DEFAULT("500", "default");
 
     @Getter
-    private final String code;
+    @JsonValue
+    private final String value;
 
     @Getter
     private final String message;
+
+    public static MyEnum2 getProp(String str) {
+        if (StringUtils.isEmpty(str)) {
+            return DEFAULT;
+        }
+
+        for (MyEnum2 value : MyEnum2.values()) {
+            if (Objects.equals(str, value.getValue())) {
+                return value;
+            }
+        }
+
+        return DEFAULT;
+    }
 }
 
 public class EnumExamples {
@@ -87,6 +106,7 @@ public class EnumExamples {
         System.out.println(myEnum1Values); // null null null Value
 
         System.out.println(EnumEtalon.ALL); // all
+        System.out.println(EnumEtalon.ALL.getValue()); // all
         // так привожу к строке (если например понадобиться в switch)
         System.out.println(EnumEtalon.valueOf("ALL")); // all
         System.out.println(EnumEtalon.valueOf("ALL") == EnumEtalon.ALL); // true
@@ -135,7 +155,11 @@ class EnumExample1 {
 
 class EnumExample2 {
     public static void main(String[] args) {
-        System.out.println(MyEnum2.Prop.getCode() + ' ' + MyEnum2.Prop.getMessage()); // 1 one
+        System.out.println(MyEnum2.PROP.getValue() + ' ' + MyEnum2.PROP.getMessage()); // 1 one
+
+        System.out.println(MyEnum2.getProp(null)); // DEFAULT
+        System.out.println(MyEnum2.getProp("asdf")); // DEFAULT
+        System.out.println(MyEnum2.getProp(MyEnum2.PROP.getValue())); // PROP
     }
 }
 

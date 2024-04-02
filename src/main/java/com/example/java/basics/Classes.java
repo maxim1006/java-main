@@ -696,10 +696,15 @@ class Clones {
     public static void main(String[] args) {
         // это подойдет если внутри класса Cloned не будет вложенных объектов, если будут, то надо во всех классах по цепочке реализовывать clone
         try {
-            Cloned cloned = new Cloned("Max");
+            String max = "Max";
+            Cloned cloned = new Cloned(max);
+            cloned.cloneInner.setName(max);
             Cloned cloned1 = cloned.clone();
-            cloned1.setName("Aliya");
-            cloned.display(); // MAX
+            String aliya = "Aliya";
+            cloned1.setName(aliya);
+            cloned1.cloneInner.setName(aliya);
+            cloned.display(); // Person Max CloneInner Max
+            cloned1.display(); // Person Aliya CloneInner Aliya
         } catch (CloneNotSupportedException ex) {
             System.out.println("Clonable not implemented");
         }
@@ -711,9 +716,11 @@ class Clones {
 
     public static class Cloned implements Cloneable {
         private String name;
+        private CloneInner cloneInner;
 
         Cloned(String name) {
             this.name = name;
+            this.cloneInner = new CloneInner(name);
         }
 
         void setName(String name) {
@@ -722,10 +729,36 @@ class Clones {
 
         void display() {
             System.out.printf("Person %s \n", name);
+            System.out.printf("CloneInner %s \n", cloneInner.getName());
         }
 
         public Cloned clone() throws CloneNotSupportedException {
-            return (Cloned) super.clone();
+            Cloned clone = (Cloned) super.clone();
+            clone.cloneInner = (CloneInner) cloneInner.clone();
+            return clone;
         }
     }
+
+    // если внутри Cloned есть класс то и он должен реализовать Clonable
+    public static class CloneInner implements Cloneable {
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        private String name;
+
+        public CloneInner(String name) {
+            this.name = name;
+        }
+
+        public CloneInner clone() throws CloneNotSupportedException {
+            return (CloneInner) super.clone();
+        }
+    }
+
+
 }

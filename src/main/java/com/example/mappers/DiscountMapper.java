@@ -13,7 +13,8 @@ import java.util.UUID;
 // пример ренейма переменном в таргет классе
 // Пример смены типа, DiscountInfoWithLongId имеет long id а в DiscountInfoDto String Id
 // imports = {LocalDate.class} нужен для defaultExpression = "java(LocalDate.now())"
-@Mapper(imports = {LocalDate.class})
+// lombok.builder плохо работает с mapStruct и AfterMapping не работает => отключаю билдер через builder = @Builder(disableBuilder = true)
+@Mapper(imports = {LocalDate.class}, builder = @Builder(disableBuilder = true))
 public interface DiscountMapper {
     @BeforeMapping
     default void beforeMap(DiscountInfo discountInfo) {
