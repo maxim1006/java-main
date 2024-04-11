@@ -30,20 +30,176 @@ import static java.util.Comparator.comparingInt;
 @Slf4j
 public class StreamExamples {
     public static void main(String[] args) {
-        streamCreation();
+//        streamCreation();
 //        intermediateOperations();
+//        streamSumAndMax();
+//        collectToMapExample();
+          collectToMapExample1();
+//        collectToSetExample();
+//        createMapFromListExample();
     }
 
-    static void streamCreation() {
-        Map<String, Integer> mapTest = new HashMap<>();
-        mapTest.put("Alice", 3);
-        mapTest.put("Lili", 7);
+    static void createMap() {
+        HashMap<Object, Object> map = new HashMap<>() {
+            {
+                put("prop", 1);
+                put("prop2", 2);
+            }
+        };
+
+        Map<String, Integer> map1 = Map.of("prop", 1);
+
+        // создание через AbstractMap.SimpleEntry
+        AbstractMap.SimpleEntry<String, Integer> abstractMap = new AbstractMap.SimpleEntry<>("prop", 1);
+        Map<String, Integer> collect = Stream.of(abstractMap).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    static void createList() {
+        ArrayList<String> arr = new ArrayList<>();
+        arr.add("1");
+        arr.add("2");
+
+        List<Integer> ints = List.of(1, 2, 3);
+    }
+
+    // пример трансформации коллекции в мапу
+    static void collectToMapExample() {
+        var integers = new ArrayList<>();
+
+        integers.add(1);
+        integers.add(2);
+        integers.add(null);
+        integers.add(3);
+
+        Map<String, Object> testMap = Optional.ofNullable(integers)
+                .map(list -> list.stream()
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList()))
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .collect(Collectors.toMap(
+                        Object::toString,
+                        x -> x,
+                        (x, y) -> x
+                ));
+
+        System.out.println(testMap); // {1=1, 2=2, 3=3}
+
+        // эта мапа пробегается по testMap ищет ключи containsKey
+        Map<String, Object> orderedSloById = Optional.of(List.of("1","2",3,4))
+                .orElse(List.of())
+                .stream()
+                .filter(testMap::containsKey)
+                .collect(Collectors.toMap(
+                        Object::toString,
+                        i -> i,
+                        (x, y) -> x,
+                        LinkedHashMap::new
+                ));
+
+        System.out.println(orderedSloById); // {1=1, 2=2}
+    }
+
+    static void collectToMapExample1() {
+        // Collectors.toMap
+        List<String> toMapList = List.of("Max", "Aliya");
+        Map<String, String> toMapListMap = new HashMap<>() {
+            {
+                put("Max", "husband");
+                put("Aliya", "wife");
+            }
+        };
+
+        Map<String, String> toMapMap = toMapList
+                .stream()
+                .collect(
+                        Collectors.toMap(
+                                e -> e,
+                                toMapListMap::get,
+                                (x, y) -> x,
+                                LinkedHashMap::new
+                        )
+                );
+
+        System.out.println("toMapMap " + toMapMap);
+    }
+
+    static void collectToSetExample() {
+        ArrayList<Map<String, String>> arr = new ArrayList<>();
+        arr.add(Map.of("1", "Max"));
+        arr.add(Map.of("2", "Aliya"));
+        arr.add(null);
+
+        Map<String, Map<String, String>> collect = arr.stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toMap(
+//                        x -> x.keySet().toArray()[0].toString(),
+                        x -> x.keySet().iterator().next(),
+                        y -> y
+                ));
+
+        System.out.println(collect); // {1={1=Max}, 2={2=Aliya}}
+
+//        Collection<Object> collect1 = Optional.of(List.of("1", "2"))
+        Set<Map<String, String>> collect1 = Optional.of(List.of("1", "2"))
+                .orElse(List.of())
+                .stream()
+                .filter(collect::containsKey)
+                .map(collect::get)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        System.out.println(collect1); // [{1=Max}, {2=Aliya}]
+
+        List<Map<String, String>> collect2 = collect1.stream().toList();
+
+        System.out.println(collect2);
+    }
+
+    static void collectToSetExample1() {
+        ArrayList<Map<String, String>> arr = new ArrayList<>();
+
+        arr.add(new HashMap<>() {
+            {
+                put("id", "1");
+                put("name", "Max");
+            }
+        });
+
+        arr.add(new HashMap<>() {
+            {
+                put("id", "2");
+                put("name", "Aliya");
+            }
+        });
+
+        Map<String, Map<String, String>> mapOfMaps = arr.stream()
+                .collect(Collectors.toMap(
+                        x -> x.get("id"),
+                        y -> y,
+                        (x, y) -> x
+                ));
+
+        Set<Map<String, String>> collect = Optional.of(List.of("1", "2")).orElse(List.of())
+                .stream()
+                .filter(mapOfMaps::containsKey)
+                .map(mapOfMaps::get)
+                .collect(Collectors.toSet());
+    }
+
+    static void createMapFromListExample() {
+        Map<String, Integer> mapTest = new HashMap<>() {
+            {
+                put("Alice", 3);
+                put("Lili", 7);
+            }
+        };
 
         List<Map<String, Integer>> list = new ArrayList<>();
 
         list.add(mapTest);
         list.add(mapTest);
 
+        // cоздание Set из коллекции, создание map из list,
         Set<Map.Entry<String, Integer>> newMapTest = mapTest.entrySet();
 
         System.out.println(newMapTest); // [Alice=3, Lili=7]
@@ -64,29 +220,36 @@ public class StreamExamples {
         System.out.println(newMapTestResult1); // {3=Alice, 7=Lili}
         System.out.println(newMapTestResult2); // {3=Alice, 7=Lili}
 
-        System.out.println(new ArrayList<>(list.stream().flatMap(i -> i.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::sum)).entrySet()));
+        System.out.println(list);
 
-        // Collectors.toMap
-        List<String> toMapList = List.of("Max", "Aliya");
-        Map<String, String> toMapListMap = new HashMap<>() {
-            {
-                put("Max", "husband");
-                put("Aliya", "wife");
-            }
-        };
+        // тут из интересного помимо того что из листа забираю объекты через entrySet, еще и в мерж функцию закидываю сумму этих значение и получается массив из entries с суммой возрастов
+        ArrayList<Map.Entry<String, Integer>> entries = new ArrayList<>(
+                list.stream()
+                        .flatMap(i -> i.entrySet().stream())
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Integer::sum))
+                        .entrySet());
 
-        Map<String, String> toMapMap = toMapList
-                .stream()
-                .collect(
-                        Collectors.toMap(
-                                e -> e,
-                                toMapListMap::get
-                        )
-                );
+        System.out.println(entries); // [Alice=6, Lili=14]
 
-        System.out.println("toMapMap " + toMapMap);
+        Map<String, Integer> collect = entries.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
+        System.out.println(collect);
 
+        // если просто хочу собрать мап из массива
+        List<String> list1 = List.of("Max", "Aliya");
+        Map<String, String> collect1 = list1.stream()
+                .collect(Collectors.toMap(
+                        Object::toString,
+                        x -> x,
+                        (x, y) -> x));
+
+        Map<String, String> collect2 = list1.stream()
+                .collect(Collectors.toMap(
+                        i -> i,
+                        j -> j));
+    }
+
+    static void streamCreation() {
         // nonMatch / anyMatch
         Stream<String> streamNonMatch
                 = Stream.of("CSE", "C++", "Java", "DS");
@@ -197,6 +360,29 @@ public class StreamExamples {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    static void streamSumAndMax() {
+        List<AbstractMap.SimpleEntry<String, Integer>> integersList = List.of(
+                new AbstractMap.SimpleEntry<>("name", 12),
+                new AbstractMap.SimpleEntry<>("name", 24),
+                new AbstractMap.SimpleEntry<>("name", 36)
+        );
+
+        Optional.ofNullable(integersList)
+                .stream()
+                .flatMap(Collection::stream)
+                .map(AbstractMap.SimpleEntry::getValue)
+                .mapToInt(Integer::valueOf)
+                .max()
+                .ifPresent(System.out::println);
+
+        System.out.println(Optional.ofNullable(integersList)
+                .stream()
+                .flatMap(Collection::stream)
+                .map(AbstractMap.SimpleEntry::getValue)
+                .mapToInt(Integer::valueOf)
+                .sum());
     }
 
     private static void intermediateOperations() {
@@ -421,9 +607,9 @@ class EnrichStream {
         System.out.println(m);
 
         EnrichableModel m1 = new EnrichableModel("1",
-            List.of(new EnrichableModel("2",
-                    List.of(new EnrichableModel("3", List.of())))
-            )
+                List.of(new EnrichableModel("2",
+                        List.of(new EnrichableModel("3", List.of())))
+                )
         );
 
         m1.setName("Max");
