@@ -3,6 +3,7 @@ package com.example.utils;
 import com.example.java.basics.ObjectMapperExample;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import lombok.Data;
@@ -52,5 +53,15 @@ public class StubUtils {
         }
 
         return null;
+    }
+
+    public <T> T getStubFromJson(String fileName, TypeReference<T> valueTypeRef) {
+        try {
+            InputStream input = getClass().getResourceAsStream("/files/test.json" + fileName);
+            String stub = new String(input.readAllBytes(), StandardCharsets.UTF_8);
+            return objectMapper.readValue(stub, valueTypeRef);
+        } catch (IOException e) {
+            return null;
+        }
     }
 }

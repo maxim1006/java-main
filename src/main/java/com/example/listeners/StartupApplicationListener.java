@@ -2,6 +2,7 @@ package com.example.listeners;
 
 import com.example.java.mappers.MapperTest;
 import com.example.utils.StubUtils;
+import com.fasterxml.jackson.core.type.TypeReference;
 import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
@@ -24,10 +25,11 @@ public class StartupApplicationListener {
     void onStart(@Observes StartupEvent ev) {
         log.info("Application started");
         System.out.println("Example of sout");
-        mapperTest.init();
+//        mapperTest.init();
 
         try {
-            stubUtils.getStubTest();
+//            stubUtils.getStubTest();
+//            System.out.println(stubUtils.getStubFromJson("", new TypeReference<>() {}).toString());
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }

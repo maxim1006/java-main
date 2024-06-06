@@ -9,6 +9,7 @@ import org.mapstruct.Named;
 
 import java.util.Objects;
 
+//qualifiedByName - использую кастомный метод в качестве маппера
 @Mapper
 public interface OrderStatusMapper {
     // все кроме Completed это OrderStatusTypes.PROCESSING

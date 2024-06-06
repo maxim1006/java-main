@@ -34,9 +34,11 @@ public class StreamExamples {
 //        intermediateOperations();
 //        streamSumAndMax();
 //        collectToMapExample();
-          collectToMapExample1();
+//          collectToMapExample1();
 //        collectToSetExample();
 //        createMapFromListExample();
+        createList();
+//        createMap();
     }
 
     static void createMap() {
@@ -52,6 +54,8 @@ public class StreamExamples {
         // создание через AbstractMap.SimpleEntry
         AbstractMap.SimpleEntry<String, Integer> abstractMap = new AbstractMap.SimpleEntry<>("prop", 1);
         Map<String, Integer> collect = Stream.of(abstractMap).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        System.out.println(Collections.emptyMap());
     }
 
     static void createList() {
@@ -60,7 +64,18 @@ public class StreamExamples {
         arr.add("2");
 
         List<Integer> ints = List.of(1, 2, 3);
+        // тоже нерасширяемый как и List.of
+        List<Integer> ints1 = Arrays.asList(1, 2, 3);
+
+        // а так уже будет расширяемый
+        ArrayList<Integer> integers = new ArrayList<>(Arrays.asList(1, 2, 3));
+        integers.add(4);
     }
+
+    static List<String> createList(List<String> ... lists) {
+        return Stream.of(lists).flatMap(Collection::stream).toList();
+    }
+
 
     // пример трансформации коллекции в мапу
     static void collectToMapExample() {
@@ -121,7 +136,7 @@ public class StreamExamples {
                         )
                 );
 
-        System.out.println("toMapMap " + toMapMap);
+        System.out.println("toMapMap " + toMapMap); // toMapMap {Max=husband, Aliya=wife}
     }
 
     static void collectToSetExample() {
@@ -372,6 +387,7 @@ public class StreamExamples {
         Optional.ofNullable(integersList)
                 .stream()
                 .flatMap(Collection::stream)
+//                .flatMap(entries -> entries.stream()) // это тоже что и .flatMap(Collection::stream)
                 .map(AbstractMap.SimpleEntry::getValue)
                 .mapToInt(Integer::valueOf)
                 .max()
