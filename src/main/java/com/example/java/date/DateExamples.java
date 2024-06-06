@@ -16,8 +16,6 @@ public class DateExamples {
         // локальная дата без смещения относительно UTC
         LocalDateTime nowLocal = LocalDateTime.now();
         System.out.println("Current LocalDateTime: " + nowLocal);
-
-        // так будет ошибка так как LocalDateTime нельзя в смещение offset
         System.out.println("ISO 8601 nowLocal: " + nowLocal.format(DateTimeFormatter.ISO_LOCAL_DATE));
 
         // Дата со смещением относительно UTC
