@@ -1,4 +1,4 @@
-package com.example.service;
+package com.example.service.api;
 
 import com.example.models.internal.Team;
 

@@ -1,44 +1,53 @@
 quarkus:
-  http:
-    port: 8080
+    http:
+        port: 8080
 
-# для локальной postgresql
-#  datasource:
-#    db-kind: postgresql
-#    username: me
-#    password: password
-#    jdbc:
-#      url: "jdbc:postgresql://127.0.0.1:5432/postgres"
+    # для локальной postgresql
+    #  datasource:
+    #    db-kind: postgresql
+    #    username: me
+    #    password: password
+    #    jdbc:
+    #      url: "jdbc:postgresql://127.0.0.1:5432/postgres"
 
-  # для докер компоуз
-  datasource:
-    db-kind: postgresql
-    username: postgres
-    password: secret
-    # jdbc:postgresql://<хост>:<порт>/<имя_базы_данных>
-    jdbc:
-      url: "jdbc:postgresql://127.0.0.1:15432/ux-quarkus"
+    # для докер компоуз
+    datasource:
+        db-kind: postgresql
+        username: postgres
+        password: secret
+        # jdbc:postgresql://<хост>:<порт>/<имя_базы_данных>
+        jdbc:
+            url: "jdbc:postgresql://127.0.0.1:15432/ux-quarkus"
 
-  hibernate-orm:
-    database:
-      generation: update
+    hibernate-orm:
+        database:
+            generation: update
 
-#  mongodb:
-#    connection-string: mongodb://localhost:27017
-  analytics:
-    disabled: true
-
+    #  mongodb:
+    #    connection-string: mongodb://localhost:27017
+    analytics:
+        disabled: true
+localization:
+    default-locale: en-US
+    original-locale: en-US
+    locales:
+        "en-US":
+            direction: LTR
+            path: /files/locales/en-US.json
+        "ar-SA":
+            direction: RTL
+            path: /files/locales/ar-SA.json
 portal:
-  default-locale: en-US
-  test:
-    names:
-      test-name: "testName"
-      test-name1: "testName1"
-      test-name2: "testName2"
-  locales:
-    "en-US":
-      direction: LTR
-      path: localization/en-US.json
-    "ar-SA":
-      direction: RTL
-      path: localization/ar-SA.json
+    default-locale: en-US
+    test:
+        names:
+            test-name: "testName"
+            test-name1: "testName1"
+            test-name2: "testName2"
+    locales:
+        "en-US":
+            direction: LTR
+            path: localization/en-US.json
+        "ar-SA":
+            direction: RTL
+            path: localization/ar-SA.json

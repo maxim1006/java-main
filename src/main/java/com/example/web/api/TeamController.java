@@ -1,7 +1,7 @@
 package com.example.web.api;
 
 import com.example.models.internal.Team;
-import com.example.service.TeamService;
+import com.example.service.api.TeamService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import jakarta.inject.Inject;

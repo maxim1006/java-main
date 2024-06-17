@@ -2,7 +2,7 @@ package com.example.java.streams;
 
 import com.example.java.enums.AbstractServiceViewModel;
 import com.example.models.internal.*;
-import com.example.service.AbstractService;
+import com.example.service.api.AbstractService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.inject.Inject;
 import lombok.*;

@@ -297,7 +297,7 @@ class BaseOfferingInfo {
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class PortalPage<T extends BaseOfferingInfo> {
+class PortalPageClass<T extends BaseOfferingInfo> {
     String templateName;
     T data;
 }
@@ -321,7 +321,7 @@ class OOP {
             Encapsulation e = new Encapsulation(-1);
             ExtendedPerson extendedPerson = new ExtendedPerson("Max");
             String extendedPersonJson = new ObjectMapper().writeValueAsString(extendedPerson);
-            Map<String, Object> convertedPortalPage = mapper.convertValue(new PortalPage(), new TypeReference<>() {
+            Map<String, Object> convertedPortalPage = mapper.convertValue(new PortalPageClass(), new TypeReference<>() {
             });
 
 
