@@ -37,7 +37,7 @@ public class StreamExamples {
 //          collectToMapExample1();
 //        collectToSetExample();
 //        createMapFromListExample();
-        createList();
+//        createList();
 //        createMap();
     }
 
@@ -72,6 +72,8 @@ public class StreamExamples {
         integers.add(4);
     }
 
+    // используется для обозначения вар-аргументов (varargs) в Java. Это позволяет передать переменное количество аргументов метода в виде массива. Давайте подробнее рассмотрим, что это значит и как это работает.
+    // Использование flatMap(Collection::stream) в стримах Java позволяет "развернуть" несколько потоков элементов в один поток. Давайте рассмотрим более подробно, что это значит и как это работает. Те в данном примере все эелементы из lists будут в 1 потоке и в конце концов в 1 массиве
     static List<String> createList(List<String> ... lists) {
         return Stream.of(lists).flatMap(Collection::stream).toList();
     }

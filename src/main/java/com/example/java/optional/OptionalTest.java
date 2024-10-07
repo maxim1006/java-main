@@ -77,6 +77,11 @@ class Test {
             System.out.println(instanceIfPresent.getText());
         }
 
+        // Optional.ofNullable c проверкой на null на внутренности объекта
+        if (Optional.ofNullable(instanceIfPresent).map(Content::getText).isEmpty()) {
+            System.out.println("instanceIfPresent text is null");
+        }
+
         System.out.println(instanceIfPresentOrElse.getText());
 
         List<Content> list = Optional.ofNullable(getInstances())
